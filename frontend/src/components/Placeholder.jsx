@@ -61,7 +61,7 @@ const Placeholder = ({ image, gallery, alt }) => {
         blurDataURL={image.asset.metadata.blurHash}
       />
       <Gallery>
-        {gallery.length > 0 && gallery.map((image, index) => {
+        {gallery?.map((image, index) => {
           return (
             <React.Fragment key={image._id}>
               <div
