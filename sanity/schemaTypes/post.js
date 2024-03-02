@@ -38,16 +38,19 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'gallery',
+      type: 'array',
+      of: [{type: 'image'}],
+      options: {
+        layout: 'grid',
+      },
+    }),
+    defineField({
       name: 'publishedAt',
       title: 'Published at',
       type: 'datetime',
       validation: (Rule) => Rule.required(),
     }),
-    // defineField({
-    //   name: 'body',
-    //   title: 'Body',
-    //   type: 'blockContent',
-    // }),
   ],
 
   preview: {
