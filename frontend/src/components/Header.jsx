@@ -1,22 +1,27 @@
 import styled from "styled-components";
-import { spaceL } from "@/styles/variables";
+import * as _var from "../styles/variables";
+
+import Logo from "./Logo";
 
 const Container = styled.header`
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: ${spaceL};
+  height: ${_var.spaceXL};
   display: flex;
   justify-content: center;
   align-items: center;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   z-index: 100;
 `;
 
 const Header = () => {
   return (
     <Container>
-      <span>HEADER</span>
+      <Logo fill="black" />
     </Container>
   );
 };

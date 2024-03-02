@@ -2,16 +2,22 @@ import styled from "styled-components";
 
 import client from "@/lib/sanityClient";
 
-import Layout from "@/components/Layout";
+import Hero from "@/components/Hero";
 import Placeholder from "@/components/Placeholder";
 import * as _var from "../styles/variables";
 
-const Container = styled.section`
+const Posts = styled.section`
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: ${_var.spaceL};
-  padding: ${_var.spaceL};
+  padding: 0px ${_var.spaceL};
+
+  @media ${_var.device.tablet_max} {
+    grid-template-columns: 1fr;
+    gap: ${_var.spaceL};
+    padding: 0px ${_var.spaceM};
+  }
 `;
 
 const Post = styled.div`
@@ -39,7 +45,12 @@ export default function Home({ posts }) {
     });
   };
 
-  return <Container>{handleRenderPosts(posts)}</Container>;
+  return (
+    <>
+      <Hero />
+      <Posts>{handleRenderPosts(posts)}</Posts>
+    </>
+  );
 }
 
 export async function getStaticProps() {

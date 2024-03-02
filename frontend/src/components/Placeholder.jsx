@@ -11,6 +11,10 @@ const Container = styled.div`
   aspect-ratio: 16 / 9;
   border-radius: ${_var.spaceS};
   overflow: hidden;
+
+  @media ${_var.device.tablet_max} {
+    border-radius: ${_var.spaceXS};
+  }
 `;
 
 const Placeholder = ({ url, alt }) => {

@@ -66,6 +66,12 @@ a:visited {
     color: inherit;
 }
 
+h1 {
+  font-size: 128px;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
 h1, h2 {
   line-height: 0.9;
 }
