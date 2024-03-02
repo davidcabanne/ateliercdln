@@ -11,6 +11,10 @@ const Posts = styled.section`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
 
+  @media ${_var.device.laptopL_min} {
+    grid-template-columns: 1fr 1fr;
+  }
+
   gap: ${_var.spaceL};
   padding: 0px ${_var.spaceL};
 

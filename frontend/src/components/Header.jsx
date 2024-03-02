@@ -16,12 +16,18 @@ const Container = styled.header`
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   z-index: 100;
+
+  & a {
+    cursor: pointer;
+  }
 `;
 
 const Header = () => {
   return (
     <Container>
-      <Logo fill="black" />
+      <a href="/">
+        <Logo fill="black" />
+      </a>
     </Container>
   );
 };

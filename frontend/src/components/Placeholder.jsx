@@ -10,12 +10,8 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   aspect-ratio: 16 / 9;
-  border-radius: clamp(8px, 2vw, 32px);
+  border-radius: clamp(16px, 2vw, 32px);
   overflow: hidden;
-
-  @media ${_var.device.tablet_max} {
-    border-radius: ${_var.spaceXS};
-  }
 `;
 
 const Gallery = styled.div`
@@ -37,11 +33,13 @@ const Gallery = styled.div`
 
   & img {
     opacity: 0;
-    transition: 75ms ${_var.cubicBezier};
-    transition-property: opacity;
+    transform: translateX(-8px);
+    transition: 175ms ${_var.cubicBezier};
+    transition-property: opacity, transform;
 
     &.active {
       opacity: 1;
+      transform: translateX(0px);
     }
   }
 `;
