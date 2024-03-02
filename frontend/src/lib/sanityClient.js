@@ -5,7 +5,8 @@ const client = createClient({
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
   apiVersion: "2024-03-01",
   // token: process.env.NEXT_PUBLIC_SANITY_TOKEN,
-  useCdn: true,
+  // useCdn: true,
+  useCdn: process.env.NODE_ENV === "production",
 });
 
 export default client;
