@@ -114,7 +114,11 @@ const Footer = () => {
         >
           Linkedin
         </FooterLink>
-        <Icon>
+        <Icon
+          href="https://www.instagram.com/ateliercdln/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             x="0px"
@@ -136,7 +140,11 @@ const Footer = () => {
             </g>
           </svg>
         </Icon>
-        <Icon>
+        <Icon
+          href="https://fr.linkedin.com/in/tchapdelaine"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             x="0px"
