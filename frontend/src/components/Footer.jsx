@@ -78,7 +78,7 @@ const Footer = () => {
         <p> Atelier CDLN</p>
         <span>●</span>
         <p>All right reserved</p>
-        <span>●</span>
+        <span>■</span>
         <p>Bordeaux, France</p>
       </Legals>
       <Socials>

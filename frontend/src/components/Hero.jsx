@@ -36,7 +36,7 @@ const Container = styled.section`
 
 const Panel = styled.div`
   display: flex;
-  justify-content: ${(props) => props.justifyContent};
+  justify-content: ${(props) => props.$justifycontent};
   align-items: center;
   gap: ${_var.spaceM};
 
@@ -48,15 +48,15 @@ const Panel = styled.div`
 const Hero = () => {
   return (
     <Container>
-      <Panel justifyContent="start" className="panelPrimary">
+      <Panel $justifycontent="start" className="panelPrimary">
         <ShapeIcon shape="circle" fill="black" width="94px" minWidth="94px" />
         <h1>Atelier CDLN</h1>
       </Panel>
-      <Panel justifyContent="end" className="panelSecondary">
+      <Panel $justifycontent="end" className="panelSecondary">
         <ShapeIcon shape="square" fill="black" width="94px" minWidth="94px" />
         <h1>Design graphique</h1>
       </Panel>
-      <Panel justifyContent="start" className="panelThird">
+      <Panel $justifycontent="start" className="panelThird">
         <ShapeIcon shape="triangle" fill="black" width="94px" minWidth="94px" />
         <h1>Direction artistique</h1>
       </Panel>

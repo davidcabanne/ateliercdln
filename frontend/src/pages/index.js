@@ -9,7 +9,8 @@ import * as _var from "../styles/variables";
 const Posts = styled.section`
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+
   gap: ${_var.spaceL};
   padding: 0px ${_var.spaceL};
 
@@ -28,17 +29,18 @@ const Post = styled.div`
 `;
 
 const Title = styled.h4`
-  text-transform: uppercase;
+  font-size: 24px;
   font-weight: 400;
+  text-transform: uppercase;
 `;
 
 export default function Home({ posts }) {
   const handleRenderPosts = (posts) => {
     return posts.map((post) => {
-      const { id, title, imageUrl } = post;
+      const { id, title, Image, gallery } = post;
       return (
         <Post key={id}>
-          <Placeholder url={imageUrl} alt={title} />
+          <Placeholder image={Image} gallery={gallery} alt={title} />
           <Title>{title}</Title>
         </Post>
       );
@@ -54,11 +56,22 @@ export default function Home({ posts }) {
 }
 
 export async function getStaticProps() {
-  const query = `*[_type == "post"]{
+  const query = `
+  *[_type == "post"]{
     'id': _id,
     title,
-    "imageUrl": Image.asset._ref
-  }`;
+    Image {
+      asset->
+    },
+    "gallery": gallery[].asset->{
+      _id,
+      url,
+      metadata {
+        blurHash,
+      }
+    }
+  }  
+  `;
   const posts = await client.fetch(query);
   return {
     props: {
