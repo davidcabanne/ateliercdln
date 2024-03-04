@@ -32,6 +32,20 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'gridItemSize',
+      title: 'Grid Item Size',
+      type: 'string',
+      options: {
+        list: [
+          {title: 'Normal', value: 'normal'},
+          {title: 'Medium', value: 'medium'},
+          {title: 'Large', value: 'large'},
+        ],
+      },
+      description: 'Select the size of the grid item',
+      defaultValue: 'normal',
+    }),
+    defineField({
       name: 'imageDescription',
       title: 'Image Description',
       type: 'string',
