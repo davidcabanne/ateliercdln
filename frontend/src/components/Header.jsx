@@ -8,7 +8,7 @@ const Container = styled.header`
   top: 0;
   left: 0;
   width: 100%;
-  height: ${_var.spaceXL};
+  height: ${_var.headerHeight};
   display: flex;
   justify-content: center;
   align-items: center;

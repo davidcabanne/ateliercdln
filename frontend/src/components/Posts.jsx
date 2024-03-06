@@ -9,6 +9,7 @@ const Container = styled.section`
   grid-template-columns: 1fr 1fr 1fr;
   gap: ${_var.spaceL};
   padding: 0px ${_var.spaceL};
+  margin-bottom: 256px;
 
   @media ${_var.device.laptop_min} {
     padding-top: 128px;
@@ -18,6 +19,7 @@ const Container = styled.section`
     grid-template-columns: 1fr;
     gap: ${_var.spaceL};
     padding: 0px ${_var.spaceM};
+    margin-bottom: 0px;
   }
 `;
 

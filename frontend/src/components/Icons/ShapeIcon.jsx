@@ -41,7 +41,7 @@ const ShapeIcon = ({ shape, fill, width, minWidth }) => {
           y="0px"
           viewBox="0 0 90 90"
           fill={fill}
-          style={{ width: width, minWidth: minWidth }}
+          style={{ width: width, minWidth: minWidth, transform: 'rotate(90deg)' }}
         >
           <polygon points="90,90 0,90 45,0 " />
         </Svg>
