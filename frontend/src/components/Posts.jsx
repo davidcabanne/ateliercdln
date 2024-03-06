@@ -56,20 +56,20 @@ const Title = styled.h4`
 `;
 
 const Posts = ({ posts }) => {
-  const handleRenderPosts = (posts) => {
-    return posts.map((post) => {
-      const { id, title, Image, gallery, gridItemSize } = post;
+  return (
+    <Container>
+      {posts.map((post) => {
+        const { id, title, Image, gallery, gridItemSize } = post;
 
-      return (
-        <Post key={id} $gridItemSize={gridItemSize}>
-          <Placeholder image={Image} gallery={gallery} alt={title} />
-          <Title>{title}</Title>
-        </Post>
-      );
-    });
-  };
-
-  return <Container>{handleRenderPosts(posts)}</Container>;
+        return (
+          <Post key={id} $gridItemSize={gridItemSize}>
+            <Placeholder image={Image} gallery={gallery} alt={title} />
+            <Title>{title}</Title>
+          </Post>
+        );
+      })}
+    </Container>
+  );
 };
 
 export default Posts;
