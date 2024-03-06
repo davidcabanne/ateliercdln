@@ -36,11 +36,39 @@ const Post = styled.div`
     &:first-child {
       transform: translateY(-128px);
     }
+    &:nth-child(2) {
+    }
     &:nth-child(3) {
       transform: translateY(-128px);
+      height: calc(100% + 256px);
+    }
+    &:nth-child(4) {
     }
     &:nth-child(5) {
-      transform: translateY(-128px);
+      transform: translateY(128px);
+    }
+    &:nth-child(6) {
+    }
+    &:nth-child(7) {
+      transform: translateY(128px);
+    }
+    &:nth-child(8) {
+      transform: translateY(128px);
+    }
+    &:nth-child(9) {
+      height: calc(100% + 256px);
+    }
+    &:nth-child(10) {
+      transform: translateY(128px);
+    }
+    &:nth-child(11) {
+      transform: translateY(256px);
+    }
+    &:nth-child(12) {
+      transform: translateY(128px);
+    }
+    &:nth-child(13) {
+      transform: translateY(128px);
     }
   }
 `;
