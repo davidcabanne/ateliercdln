@@ -4,7 +4,6 @@ import * as _var from "../styles/variables";
 const Container = styled.section`
   position: relative;
   width: 100vw;
-  min-height: 80vh;
   display: flex;
   justify-content: center;
   align-items: center;

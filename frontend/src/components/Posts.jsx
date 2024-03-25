@@ -35,11 +35,10 @@ const Post = styled.div`
       props.$gridItemSize === "large" ? "span 2" : ""};
     grid-row: ${(props) => (props.$gridItemSize === "medium" ? "span 2" : "")};
 
-    /* &:first-child {
-      transform: translateY(-128px);
-    } */
-    /* &:nth-child(2) {
-    } */
+    &:first-child {
+    }
+    &:nth-child(2) {
+    }
     &:nth-child(3) {
       height: calc(100% + 256px);
     }
@@ -75,12 +74,18 @@ const Post = styled.div`
 `;
 
 const Title = styled.h4`
-  font-size: 24px;
+  /* font-size: 24px; */
+  font-size: clamp(8px, 1.15vw, 24px);
   font-weight: 400;
   text-transform: uppercase;
 
+  @media ${_var.device.laptop_max} {
+    font-size: clamp(8px, 3.5vw, 24px);
+  }
+
   @media ${_var.device.tablet_max} {
-    font-size: 18px;
+    /* font-size: 18px; */
+    font-size: clamp(8px, 3.25vw, 24px);
   }
 `;
 
