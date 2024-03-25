@@ -8,7 +8,6 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   aspect-ratio: 16 / 9;
-  border-radius: 16px;
   overflow: hidden;
 `;
 

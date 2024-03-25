@@ -56,7 +56,7 @@ export const spaceML = "40px";
 export const spaceL = "64px";
 export const spaceXL = "128px";
 
-export const headerHeight = "128px";
+export const headerHeight = "120px";
 
 // ANIMATION STYLES
 export const cubicBezier = "cubic-bezier(0.79, 0.14, 0.15, 0.86)";

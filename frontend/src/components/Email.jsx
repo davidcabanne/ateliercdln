@@ -4,10 +4,11 @@ import * as _var from "../styles/variables";
 const Container = styled.section`
   position: relative;
   width: 100vw;
+  min-height: 80vh;
   display: flex;
-  justify-content: start;
+  justify-content: center;
   align-items: center;
-  padding: 200px ${_var.spaceL};
+  padding: 200px ${_var.spaceM};
   overflow: hidden;
 
   @media ${_var.device.tablet_max} {

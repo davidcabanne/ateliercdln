@@ -13,7 +13,7 @@ const Container = styled.section`
   display: flex;
   flex-direction: column;
   gap: ${_var.spaceML};
-  padding: 80px ${_var.spaceL};
+  padding: 80px ${_var.spaceM};
   overflow: hidden;
 
   @media ${_var.device.tablet_max} {
@@ -55,94 +55,94 @@ const Hero = () => {
   const secondaryPanelRef = useRef(null);
   const thirdPanelRef = useRef(null);
 
-  const innerWidth = useWindowWidth();
+  // const innerWidth = useWindowWidth();
 
-  const handlePanelWidth = (ref) => {
-    const panelWidth =
-      ref.current?.children[0].getBoundingClientRect().width +
-      32 +
-      ref.current?.children[1].getBoundingClientRect().width;
+  // const handlePanelWidth = (ref) => {
+  //   const panelWidth =
+  //     ref.current?.children[0].getBoundingClientRect().width +
+  //     32 +
+  //     ref.current?.children[1].getBoundingClientRect().width;
 
-    return panelWidth;
-  };
+  //   return panelWidth;
+  // };
 
-  const handleTransition = (ref, width, innerWidth) => {
-    const layoutWidth = innerWidth - 128;
+  // const handleTransition = (ref, width, innerWidth) => {
+  //   const layoutWidth = innerWidth - 128;
 
-    if (ref === secondaryPanelRef) {
-      if (width < layoutWidth) {
-        const animation = ref.current.animate(
-          [
-            { transform: `translateX(0px)` },
-            { transform: `translateX(${width - layoutWidth}px)` },
-          ],
-          {
-            fill: "forwards",
-            easing: "linear",
-            direction: "alternate",
-            duration: 10000,
-            iterations: Infinity,
-          }
-        );
-      }
-      if (width >= layoutWidth) {
-        const animation = ref.current.animate(
-          [
-            { transform: `translateX(0px)` },
-            { transform: `translateX(${64 - layoutWidth }px)` },
-          ],
-          {
-            fill: "forwards",
-            easing: "linear",
-            direction: "alternate",
-            duration: 10000,
-            iterations: Infinity,
-          }
-        );
-      }
-    } else {
-      if (width < layoutWidth) {
-        const animation = ref.current.animate(
-          [
-            { transform: `translateX(0px)` },
-            { transform: `translateX(${layoutWidth - width}px)` },
-          ],
-          {
-            fill: "forwards",
-            easing: "linear",
-            direction: "alternate",
-            duration: 10000,
-            iterations: Infinity,
-          }
-        );
-      }
-      if (width >= layoutWidth) {
-        const animation = ref.current.animate(
-          [
-            { transform: `translateX(0px)` },
-            { transform: `translateX(${layoutWidth - 64}px)` },
-          ],
-          {
-            fill: "forwards",
-            easing: "linear",
-            direction: "alternate",
-            duration: 10000,
-            iterations: Infinity,
-          }
-        );
-      }
-    }
-  };
+  //   if (ref === secondaryPanelRef) {
+  //     if (width < layoutWidth) {
+  //       const animation = ref.current.animate(
+  //         [
+  //           { transform: `translateX(0px)` },
+  //           { transform: `translateX(${width - layoutWidth}px)` },
+  //         ],
+  //         {
+  //           fill: "forwards",
+  //           easing: "linear",
+  //           direction: "alternate",
+  //           duration: 10000,
+  //           iterations: Infinity,
+  //         }
+  //       );
+  //     }
+  //     if (width >= layoutWidth) {
+  //       const animation = ref.current.animate(
+  //         [
+  //           { transform: `translateX(0px)` },
+  //           { transform: `translateX(${64 - layoutWidth }px)` },
+  //         ],
+  //         {
+  //           fill: "forwards",
+  //           easing: "linear",
+  //           direction: "alternate",
+  //           duration: 10000,
+  //           iterations: Infinity,
+  //         }
+  //       );
+  //     }
+  //   } else {
+  //     if (width < layoutWidth) {
+  //       const animation = ref.current.animate(
+  //         [
+  //           { transform: `translateX(0px)` },
+  //           { transform: `translateX(${layoutWidth - width}px)` },
+  //         ],
+  //         {
+  //           fill: "forwards",
+  //           easing: "linear",
+  //           direction: "alternate",
+  //           duration: 10000,
+  //           iterations: Infinity,
+  //         }
+  //       );
+  //     }
+  //     if (width >= layoutWidth) {
+  //       const animation = ref.current.animate(
+  //         [
+  //           { transform: `translateX(0px)` },
+  //           { transform: `translateX(${layoutWidth - 64}px)` },
+  //         ],
+  //         {
+  //           fill: "forwards",
+  //           easing: "linear",
+  //           direction: "alternate",
+  //           duration: 10000,
+  //           iterations: Infinity,
+  //         }
+  //       );
+  //     }
+  //   }
+  // };
 
-  useEffect(() => {
-    const firstPanelWidth = handlePanelWidth(firstPanelRef);
-    const secondPanelWidth = handlePanelWidth(secondaryPanelRef);
-    const thirdPanelWidth = handlePanelWidth(thirdPanelRef);
+  // useEffect(() => {
+  //   const firstPanelWidth = handlePanelWidth(firstPanelRef);
+  //   const secondPanelWidth = handlePanelWidth(secondaryPanelRef);
+  //   const thirdPanelWidth = handlePanelWidth(thirdPanelRef);
 
-    handleTransition(firstPanelRef, firstPanelWidth, innerWidth);
-    handleTransition(secondaryPanelRef, secondPanelWidth, innerWidth);
-    handleTransition(thirdPanelRef, thirdPanelWidth, innerWidth);
-  }, [innerWidth]);
+  //   handleTransition(firstPanelRef, firstPanelWidth, innerWidth);
+  //   handleTransition(secondaryPanelRef, secondPanelWidth, innerWidth);
+  //   handleTransition(thirdPanelRef, thirdPanelWidth, innerWidth);
+  // }, [innerWidth]);
 
   return (
     <Container>
@@ -163,7 +163,7 @@ const Hero = () => {
         <h1>Design graphique</h1>
       </Panel>
       <Panel ref={thirdPanelRef} $justifycontent="start" className="panelThird">
-        <ShapeIcon shape="triangle" fill="black" width="94px" minWidth="94px" />
+        <ShapeIcon shape="triangle" fill="black" width="94px" minWidth="94px" rotate />
         <h1>Direction artistique</h1>
       </Panel>
     </Container>

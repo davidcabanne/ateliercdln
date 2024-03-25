@@ -7,7 +7,7 @@ const Svg = styled.svg`
   }
 `;
 
-const ShapeIcon = ({ shape, fill, width, minWidth }) => {
+const ShapeIcon = ({ shape, fill, width, minWidth, rotate }) => {
   return (
     <>
       {shape === "square" && (
@@ -41,7 +41,12 @@ const ShapeIcon = ({ shape, fill, width, minWidth }) => {
           y="0px"
           viewBox="0 0 90 90"
           fill={fill}
-          style={{ width: width, minWidth: minWidth, transform: 'rotate(90deg)' }}
+          style={{
+            width: width,
+            minWidth: minWidth,
+            transform: rotate && "rotate(90deg)",
+            // transform: 'rotate(90deg)'
+          }}
         >
           <polygon points="90,90 0,90 45,0 " />
         </Svg>

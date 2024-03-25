@@ -7,8 +7,8 @@ const Container = styled.section`
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: ${_var.spaceL};
-  padding: 0px ${_var.spaceL};
+  gap: 80px;
+  padding: 0px ${_var.spaceM};
   margin-bottom: 256px;
 
   @media ${_var.device.laptop_min} {
@@ -35,42 +35,41 @@ const Post = styled.div`
       props.$gridItemSize === "large" ? "span 2" : ""};
     grid-row: ${(props) => (props.$gridItemSize === "medium" ? "span 2" : "")};
 
-    &:first-child {
+    /* &:first-child {
       transform: translateY(-128px);
-    }
-    &:nth-child(2) {
-    }
+    } */
+    /* &:nth-child(2) {
+    } */
     &:nth-child(3) {
-      transform: translateY(-128px);
       height: calc(100% + 256px);
     }
     &:nth-child(4) {
     }
     &:nth-child(5) {
-      transform: translateY(128px);
+      transform: translateY(256px);
     }
     &:nth-child(6) {
     }
     &:nth-child(7) {
-      transform: translateY(128px);
+      transform: translateY(256px);
     }
     &:nth-child(8) {
-      transform: translateY(128px);
+      transform: translateY(256px);
     }
     &:nth-child(9) {
       height: calc(100% + 256px);
     }
     &:nth-child(10) {
-      transform: translateY(128px);
+      transform: translateY(256px);
     }
     &:nth-child(11) {
       transform: translateY(256px);
     }
     &:nth-child(12) {
-      transform: translateY(128px);
+      transform: translateY(256px);
     }
     &:nth-child(13) {
-      transform: translateY(128px);
+      transform: translateY(256px);
     }
   }
 `;
