@@ -1,7 +1,12 @@
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import Placeholder from "@/components/Placeholder";
-
 import * as _var from "../styles/variables";
+
+import useWindowWidth from "@/hooks/useWindowWidth";
+import useElementOnScreen from "@/hooks/useElementOnScreen";
+
+import Placeholder from "@/components/Placeholder";
+import CallToAction from "./CallToAction";
 
 const Container = styled.section`
   width: 100%;
@@ -28,6 +33,15 @@ const Post = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${_var.spaceS};
+  opacity: 0;
+  transform: translateY(16px);
+  transition: 500ms ${_var.cubicBezier};
+  transition-property: opacity, transform;
+
+  &.active {
+    opacity: 1;
+    transform: translateY(0px);
+  }
 
   @media ${_var.device.laptop_min} {
     grid-row: ${(props) => (props.$gridItemSize === "large" ? "span 2" : "")};
@@ -89,19 +103,62 @@ const Title = styled.h4`
   }
 `;
 
+const PostWrapper = ({ post }) => {
+  const { id, title, Image, gallery, gridItemSize } = post;
+  const [containerRef, isVisible] = useElementOnScreen({
+    root: null,
+    rootMargin: "0px",
+    threshold: 0.05,
+  });
+
+  return (
+    <Post
+      ref={containerRef}
+      key={id}
+      $gridItemSize={gridItemSize}
+      className={isVisible ? "active" : ""}
+    >
+      <Placeholder image={Image} gallery={gallery} alt={title} />
+      <Title>{title}</Title>
+    </Post>
+  );
+};
+
 const Posts = ({ posts }) => {
+  const [activePosts, setActivePosts] = useState(false);
+  const [filteredPosts, setFilteredPosts] = useState([]);
+
+  const innerWidth = useWindowWidth();
+
+  useEffect(() => {
+    const updatePostsDisplay = () => {
+      if (innerWidth <= 768 && !activePosts) {
+        setFilteredPosts(posts.slice(0, 7));
+      }
+      if (innerWidth <= 768 && !activePosts) {
+        setFilteredPosts(posts.slice(0, 7));
+      } else if (innerWidth > 768 || activePosts) {
+        setFilteredPosts(posts);
+      }
+    };
+
+    updatePostsDisplay();
+  }, [innerWidth, activePosts, posts]);
+
+  const handleRenderProjects = () => {
+    setActivePosts(true);
+    setFilteredPosts(posts);
+  };
+
   return (
     <Container>
-      {posts.map((post) => {
-        const { id, title, Image, gallery, gridItemSize } = post;
-
-        return (
-          <Post key={id} $gridItemSize={gridItemSize}>
-            <Placeholder image={Image} gallery={gallery} alt={title} />
-            <Title>{title}</Title>
-          </Post>
-        );
-      })}
+      {filteredPosts.map((post) => (
+        <PostWrapper key={post.id} post={post} />
+      ))}
+      <CallToAction
+        activePosts={activePosts}
+        handleRenderProjects={handleRenderProjects}
+      />
     </Container>
   );
 };

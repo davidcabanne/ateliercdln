@@ -12,6 +12,7 @@ const Container = styled.section`
 
   @media ${_var.device.tablet_max} {
     padding: 128px ${_var.spaceM};
+    display: none;
   }
 `;
 

@@ -45,7 +45,6 @@ const ShapeIcon = ({ shape, fill, width, minWidth, rotate }) => {
             width: width,
             minWidth: minWidth,
             transform: rotate && "rotate(90deg)",
-            // transform: 'rotate(90deg)'
           }}
         >
           <polygon points="90,90 0,90 45,0 " />
