@@ -63,7 +63,7 @@ a:not([class]) {
 }
 
 a:visited {
-    color: inherit;
+    color: black;
 }
 
 h1 {
