@@ -1,7 +1,21 @@
-import React, { useRef } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import * as _var from "../../styles/variables";
+
+import useWindowWidth from "@/hooks/useWindowWidth";
+import useElementOnScreen from "@/hooks/useElementOnScreen";
+
+const animationTiming = 500;
+
+const fadeOut = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
 
 const getGridItemSizeStyles = (size) => {
   switch (size) {
@@ -21,6 +35,7 @@ const getGridItemSizeStyles = (size) => {
 
 const Container = styled.div`
   position: relative;
+  cursor: pointer;
 
   @media ${_var.device.laptop_min} {
     ${(props) => getGridItemSizeStyles(props.$gridItemSize)}
@@ -29,41 +44,85 @@ const Container = styled.div`
   @media ${_var.device.laptop_max} {
     aspect-ratio: 16 / 10;
   }
+
+  &:hover {
+    & :nth-child(1) {
+      opacity: 0;
+    }
+
+    & > div > img {
+      opacity: 0;
+      animation: ${fadeOut} ${animationTiming}ms forwards;
+      animation: name duration timing-function delay iteration-count direction
+        fill-mode;
+    }
+  }
+`;
+
+const imageStyles = `
+position: absolute;
+width: 100%;
+height: 100%;
+object-fit: cover;
+`;
+
+const MainImage = styled(Image)`
+  ${imageStyles}
+  transition: ${animationTiming}ms ${_var.cubicBezier};
+  transition-property: opacity;
+  z-index: 50;
+  opacity: ${(props) => (props.$isActive ? 1 : 0)};
 `;
 
 const StyledImage = styled(Image)`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  ${imageStyles}
+  opacity: ${(props) => (props.$isActive ? 1 : 0)};
+  transition: ${animationTiming}ms ${_var.cubicBezier};
+  transition-property: opacity;
 `;
 
 const Gallery = styled.div`
   position: absolute;
   inset: 0;
   display: flex;
-  cursor: pointer;
-
-  & img {
-    opacity: 0;
-  }
+  z-index: 0;
 `;
 
 const Placeholder = ({ image, gallery, alt, gridItemSize }) => {
-  const galleryRef = useRef();
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const innerWidth = useWindowWidth();
+  const [containerRef, isVisible] = useElementOnScreen({
+    root: null,
+    rootMargin: "0px 25% -25% 0px",
+    threshold: 1,
+  });
+
+  useEffect(() => {
+    if (activeIndex < gallery.length - 1 && (innerWidth >= 768 || isVisible)) {
+      const timer = setTimeout(() => {
+        setActiveIndex((prevIndex) => prevIndex + 1);
+      }, animationTiming * 2);
+      return () => clearTimeout(timer);
+    }
+    if (!isVisible) {
+      setActiveIndex(0);
+    }
+  }, [activeIndex, gallery.length, isVisible]);
 
   return (
-    <Container $gridItemSize={gridItemSize}>
-      <StyledImage
+    <Container ref={containerRef} $gridItemSize={gridItemSize}>
+      <MainImage
         src={image.asset.url}
         alt={alt}
         fill
         sizes="(min-width: 600px) 50vw, 100vw"
         placeholder="blur"
         blurDataURL={image.asset.metadata.blurHash}
+        $isActive={activeIndex === 0}
       />
-      <Gallery ref={galleryRef}>
-        {gallery?.map((image) => (
+      <Gallery>
+        {gallery?.map((image, index) => (
           <StyledImage
             key={image._id}
             src={image.url}
@@ -72,6 +131,10 @@ const Placeholder = ({ image, gallery, alt, gridItemSize }) => {
             sizes="(min-width: 600px) 50vw, 100vw"
             placeholder="blur"
             blurDataURL={image.metadata.blurHash}
+            $isActive={activeIndex === index + 1}
+            style={{
+              animationDelay: `${index * (animationTiming * 2)}ms`,
+            }}
           />
         ))}
       </Gallery>
