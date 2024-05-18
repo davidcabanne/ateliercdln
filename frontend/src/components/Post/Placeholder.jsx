@@ -8,7 +8,7 @@ const getGridItemSizeStyles = (size) => {
     case "normal":
     case "large":
       return css`
-        aspect-ratio: 16 / 9;
+        aspect-ratio: 16 / 10;
       `;
     case "medium":
       return css`
@@ -27,7 +27,7 @@ const Container = styled.div`
   }
 
   @media ${_var.device.laptop_max} {
-    ${(props) => getGridItemSizeStyles(props.$gridItemSize)}
+    aspect-ratio: 16 / 10;
   }
 `;
 
