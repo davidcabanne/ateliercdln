@@ -40,15 +40,21 @@ const Hero = () => {
 
   const innerWidth = useWindowWidth();
 
-  const panelWidth = (ref) => {
+  const handlePanelWidth = (ref) => {
     const panelWidth = ref.current.getBoundingClientRect().width;
     const contentWidth = ref.current.children[0].getBoundingClientRect().width;
-    return panelWidth - contentWidth;
+    const options = {
+      panelWidth: panelWidth,
+      contentWidth: contentWidth,
+      totalWidth: panelWidth - contentWidth,
+    };
+    return options;
   };
 
   useEffect(() => {
     if (firstPanelRef?.current) {
-      const totalWidth = panelWidth(firstPanelRef);
+      const { panelWidth, contentWidth, totalWidth } =
+        handlePanelWidth(firstPanelRef);
 
       if (totalWidth >= 0) {
         firstPanelRef.current.animate(
@@ -67,9 +73,27 @@ const Hero = () => {
           }
         );
       }
+      if (totalWidth < 0) {
+        firstPanelRef.current.animate(
+          [
+            { transform: `translateX(0px)` },
+            {
+              transform: `translateX(-${contentWidth - (innerWidth - 64)}px)`,
+            },
+          ],
+          {
+            fill: "forwards",
+            easing: "linear",
+            direction: "alternate",
+            duration: 10000,
+            iterations: Infinity,
+          }
+        );
+      }
     }
     if (secondPanelRef?.current) {
-      const totalWidth = panelWidth(secondPanelRef);
+      const { panelWidth, contentWidth, totalWidth } =
+        handlePanelWidth(secondPanelRef);
 
       if (totalWidth >= 0) {
         secondPanelRef.current.animate(
@@ -89,9 +113,28 @@ const Hero = () => {
           }
         );
       }
+      if (totalWidth < 0) {
+        secondPanelRef.current.animate(
+          [
+            { transform: `translateX(0px)` },
+            {
+              transform: `translateX(${contentWidth - (innerWidth - 64)}px)`,
+            },
+          ],
+          {
+            fill: "forwards",
+            easing: "linear",
+            direction: "alternate",
+            duration: 10000,
+            iterations: Infinity,
+            delay: 300,
+          }
+        );
+      }
     }
     if (thirdPanelRef?.current) {
-      const totalWidth = panelWidth(thirdPanelRef);
+      const { panelWidth, contentWidth, totalWidth } =
+        handlePanelWidth(thirdPanelRef);
 
       if (totalWidth >= 0) {
         thirdPanelRef.current.animate(
@@ -99,6 +142,24 @@ const Hero = () => {
             { transform: `translateX(0px)` },
             {
               transform: `translateX(${totalWidth}px)`,
+            },
+          ],
+          {
+            fill: "forwards",
+            easing: "linear",
+            direction: "alternate",
+            duration: 10000,
+            iterations: Infinity,
+            delay: 600,
+          }
+        );
+      }
+      if (totalWidth < 0) {
+        thirdPanelRef.current.animate(
+          [
+            { transform: `translateX(0px)` },
+            {
+              transform: `translateX(-${contentWidth - (innerWidth - 64)}px)`,
             },
           ],
           {
