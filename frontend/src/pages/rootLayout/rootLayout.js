@@ -4,10 +4,10 @@ import * as _var from "@/styles/variables";
 import { Hanken_Grotesk } from "next/font/google";
 const hankenGrotesk = Hanken_Grotesk({ subsets: ["latin"] });
 
-import Header from "@/components/Header";
+import Header from "@/components/Layout/Header";
 import Email from "@/components/Email";
-import Footer from "@/components/Footer";
-import Shape from "@/components/Shape";
+import Footer from "@/components/Layout/Footer";
+// import Shape from "@/components/Shape";
 import { headerHeight } from "@/styles/variables";
 
 const Page = styled.div`

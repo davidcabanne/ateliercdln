@@ -5,7 +5,7 @@ import * as _var from "@/styles/variables";
 
 import useWindowWidth from "@/hooks/useWindowWidth";
 
-import ShapeIcon from "./Icons/ShapeIcon";
+import ShapeIcon from "../Icons/ShapeIcon";
 
 const Container = styled.section`
   position: relative;
