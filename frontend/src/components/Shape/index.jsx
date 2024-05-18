@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Draggable from "react-draggable";
 
-import * as _var from "../styles/variables";
+import * as _var from "../../styles/variables";
 
 const size = 256;
 const backgroundColor = "transparent";
@@ -77,7 +77,7 @@ const Shape = ({ shape }) => {
 
   return (
     <Draggable bounds="body" position={position} onStop={handleStop}>
-      <DraggableContainer >
+      <DraggableContainer>
         <CSSshape shape={shape} />
       </DraggableContainer>
     </Draggable>

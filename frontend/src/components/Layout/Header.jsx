@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import * as _var from "../styles/variables";
+import * as _var from "../../styles/variables";
 
-import Logo from "./Logo";
+import Logo from "../Logo";
 
 const Container = styled.header`
   position: fixed;
