@@ -45,16 +45,11 @@ const Container = styled.div`
     aspect-ratio: 16 / 10;
   }
 
-  &:hover {
-    & :nth-child(1) {
-      opacity: 0;
-    }
-
-    & > div > img {
-      opacity: 0;
-      animation: ${fadeOut} ${animationTiming}ms forwards;
-      animation: name duration timing-function delay iteration-count direction
-        fill-mode;
+  @media ${_var.device.tablet_min} {
+    &:hover {
+      & > div > img {
+        animation: ${fadeOut} ${animationTiming}ms forwards;
+      }
     }
   }
 `;
@@ -68,24 +63,21 @@ object-fit: cover;
 
 const MainImage = styled(Image)`
   ${imageStyles}
-  transition: ${animationTiming}ms ${_var.cubicBezier};
-  transition-property: opacity;
-  z-index: 50;
-  opacity: ${(props) => (props.$isActive ? 1 : 0)};
+  z-index: 0;
 `;
 
 const StyledImage = styled(Image)`
   ${imageStyles}
-  opacity: ${(props) => (props.$isActive ? 1 : 0)};
   transition: ${animationTiming}ms ${_var.cubicBezier};
   transition-property: opacity;
+  opacity: ${(props) => (props.$isActive ? 1 : 0)};
 `;
 
 const Gallery = styled.div`
   position: absolute;
   inset: 0;
   display: flex;
-  z-index: 0;
+  z-index: 1;
 `;
 
 const Placeholder = ({ image, gallery, alt, gridItemSize }) => {
@@ -94,12 +86,21 @@ const Placeholder = ({ image, gallery, alt, gridItemSize }) => {
   const innerWidth = useWindowWidth();
   const [containerRef, isVisible] = useElementOnScreen({
     root: null,
-    rootMargin: "0px 25% -25% 0px",
+    rootMargin: "0px ",
     threshold: 1,
   });
 
+  const combinedGallery = [
+    ...gallery,
+    {
+      metadata: image.asset.metadata,
+      _id: image.asset._id,
+      url: image.asset.url,
+    },
+  ];
+
   useEffect(() => {
-    if (activeIndex < gallery.length - 1 && (innerWidth >= 768 || isVisible)) {
+    if (innerWidth <= 768 && isVisible) {
       const timer = setTimeout(() => {
         setActiveIndex((prevIndex) => prevIndex + 1);
       }, animationTiming * 2);
@@ -108,7 +109,7 @@ const Placeholder = ({ image, gallery, alt, gridItemSize }) => {
     if (!isVisible) {
       setActiveIndex(0);
     }
-  }, [activeIndex, gallery.length, isVisible]);
+  }, [activeIndex, combinedGallery.length, isVisible]);
 
   return (
     <Container ref={containerRef} $gridItemSize={gridItemSize}>
@@ -122,7 +123,7 @@ const Placeholder = ({ image, gallery, alt, gridItemSize }) => {
         $isActive={activeIndex === 0}
       />
       <Gallery>
-        {gallery?.map((image, index) => (
+        {combinedGallery?.map((image, index) => (
           <StyledImage
             key={image._id}
             src={image.url}
@@ -135,6 +136,7 @@ const Placeholder = ({ image, gallery, alt, gridItemSize }) => {
             style={{
               animationDelay: `${index * (animationTiming * 2)}ms`,
             }}
+            className={index === combinedGallery.length - 1 ? "last-image" : ""}
           />
         ))}
       </Gallery>
