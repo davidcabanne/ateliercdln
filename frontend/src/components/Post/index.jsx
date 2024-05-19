@@ -62,6 +62,14 @@ const Container = styled.div`
       transform: translateY(256px);
     }
   }
+  @media ${_var.device.laptop_max} {
+    grid-template-columns: 1fr;
+    /* grid-row: ${(props) =>
+      props.$gridItemSize === "large" ? "span 2" : ""}; */
+    grid-row: ${(props) => (props.$gridItemSize === "medium" ? "span 2" : "")};
+    /* grid-row: ${(props) =>
+      props.$gridItemSize === "medium" ? "span 2" : ""}; */
+  }
 `;
 
 const Title = styled.h4`
