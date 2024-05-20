@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import styled, { css } from "styled-components";
 import * as _var from "../../styles/variables";
+
+import useWindowWidth from "@/hooks/useWindowWidth";
 
 const animationTiming = 500;
 
@@ -118,7 +120,7 @@ const Container = styled.div`
     transition-property: opacity;
   }
 
-  &:hover {
+  &.active {
     & ${MainImage} {
       opacity: 0;
       transition: ${animationTiming}ms ${_var.cubicBezier};
@@ -180,6 +182,8 @@ const Container = styled.div`
 `;
 
 const Placeholder = ({ image, gallery, alt, gridItemSize }) => {
+  const [active, setActive] = useState(false);
+
   const combinedGallery = [
     ...gallery,
     {
@@ -190,7 +194,12 @@ const Placeholder = ({ image, gallery, alt, gridItemSize }) => {
   ];
 
   return (
-    <Container $gridItemSize={gridItemSize}>
+    <Container
+      $gridItemSize={gridItemSize}
+      onMouseEnter={() => setActive(true)}
+      onMouseLeave={() => setActive(false)}
+      className={active ? "active" : ""}
+    >
       <MainImage
         src={image.asset.url}
         alt={alt}
@@ -209,11 +218,6 @@ const Placeholder = ({ image, gallery, alt, gridItemSize }) => {
             sizes="(min-width: 600px) 50vw, 100vw"
             placeholder="blur"
             blurDataURL={image.metadata.blurHash}
-            // style={{
-            //   transitionDelay: `${
-            //     animationTiming + index * (animationTiming * 2)
-            //   }ms`,
-            // }}
           />
         ))}
       </Gallery>

@@ -12,6 +12,10 @@ import { headerHeight } from "@/styles/variables";
 
 const Page = styled.div`
   padding-top: ${headerHeight};
+
+  @media ${_var.device.tablet_max} {
+    padding-top: 64px;
+  }
 `;
 
 export default function RootLayout({ children }) {

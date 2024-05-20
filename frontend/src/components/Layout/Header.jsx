@@ -20,13 +20,17 @@ const Container = styled.header`
   & a {
     cursor: pointer;
   }
+
+  @media ${_var.device.tablet_max} {
+    height: 64px;
+  }
 `;
 
 const Header = () => {
   return (
     <Container id="#top">
       <a href="/">
-        <Logo fill="black" />
+        <Logo fill="black" header />
       </a>
     </Container>
   );

@@ -15,6 +15,10 @@ const Container = styled.section`
   gap: ${_var.spaceML};
   padding: 80px ${_var.spaceM};
   overflow: hidden;
+
+  @media ${_var.device.tablet_max} {
+    padding: 64px ${_var.spaceM};
+  }
 `;
 
 const Panel = styled.div`
