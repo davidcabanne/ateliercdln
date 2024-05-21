@@ -4,11 +4,9 @@ import * as _var from "../styles/variables";
 
 import Post from "@/components/Post";
 
-const Grid = styled.section`
+const Container = styled.div`
+  position: relative;
   width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 80px;
   padding: 0px ${_var.spaceM};
   margin-bottom: 256px;
 
@@ -17,8 +15,6 @@ const Grid = styled.section`
   }
 
   @media ${_var.device.laptop_max} {
-    grid-template-columns: 1fr;
-    gap: ${_var.spaceL};
     padding: 0px ${_var.spaceM};
     margin-bottom: 0px;
   }
@@ -28,13 +24,28 @@ const Grid = styled.section`
   }
 `;
 
+const Grid = styled.section`
+  position: relative;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 80px;
+
+  @media ${_var.device.laptop_max} {
+    grid-template-columns: 1fr;
+    gap: ${_var.spaceL};
+  }
+`;
+
 const Posts = ({ posts }) => {
   return (
-    <Grid>
-      {posts.map((post) => (
-        <Post key={post.id} post={post} />
-      ))}
-    </Grid>
+    <Container>
+      <Grid>
+        {posts.map((post) => (
+          <Post key={post.id} post={post} />
+        ))}
+      </Grid>
+    </Container>
   );
 };
 

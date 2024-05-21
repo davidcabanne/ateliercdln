@@ -3,6 +3,10 @@ import RootLayout from "./rootLayout/rootLayout";
 import { createGlobalStyle } from "styled-components";
 import * as _var from "../styles/variables";
 
+import MouseContextProvider from "../context/mouseContext";
+
+import Cursor from "../components/Cursor/index";
+
 const GlobalStyle = createGlobalStyle`
 *,
 *::before,
@@ -48,6 +52,11 @@ body {
   font-family: "Hanken Grotesk", Helvetica, sans-serif;
   font-size: 16px;
   overflow-x: hidden;
+
+  cursor: none;
+  @media ${_var.device.tablet_max} {
+    cursor: auto !important;
+  }
 }
 
 html {
@@ -114,8 +123,11 @@ p {
 function MyApp({ Component, pageProps }) {
   return (
     <RootLayout>
-      <GlobalStyle />
-      <Component {...pageProps} />
+      <MouseContextProvider>
+        <Cursor />
+        <GlobalStyle />
+        <Component {...pageProps} />
+      </MouseContextProvider>
     </RootLayout>
   );
 }

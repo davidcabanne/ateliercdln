@@ -1,3 +1,5 @@
+import React from "react";
+
 import styled from "styled-components";
 import * as _var from "../../styles/variables";
 
@@ -64,11 +66,7 @@ const Container = styled.div`
   }
   @media ${_var.device.laptop_max} {
     grid-template-columns: 1fr;
-    /* grid-row: ${(props) =>
-      props.$gridItemSize === "large" ? "span 2" : ""}; */
     grid-row: ${(props) => (props.$gridItemSize === "medium" ? "span 2" : "")};
-    /* grid-row: ${(props) =>
-      props.$gridItemSize === "medium" ? "span 2" : ""}; */
   }
 `;
 
@@ -88,6 +86,7 @@ const Title = styled.h4`
 
 const Post = ({ post }) => {
   const { id, title, Image, gallery, gridItemSize } = post;
+
   const [containerRef, isVisible] = useElementOnScreen({
     root: null,
     rootMargin: "0px",
