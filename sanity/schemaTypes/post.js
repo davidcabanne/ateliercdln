@@ -59,6 +59,8 @@ export default defineType({
       options: {
         layout: 'grid',
       },
+      validation: (Rule) =>
+        Rule.max(9).warning('You can only add up to 10 images (including the main image).'),
     }),
     defineField({
       name: 'publishedAt',

@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Image from "next/image";
 import styled, { css } from "styled-components";
 import * as _var from "../../styles/variables";
+
+import { MouseContext } from "@/context/mouseContext";
 
 const animationTiming = 500;
 
@@ -26,197 +28,123 @@ const getGridItemSizeStyles = (size) => {
   }
 };
 
-const imageStyles = `
-position: absolute;
-width: 100%;
-height: 100%;
-object-fit: cover;
-`;
-
-const MainImage = styled(Image)`
-  ${imageStyles}
-  z-index: 30;
-`;
-
-const StyledImage = styled(Image)`
-  ${imageStyles}
-  transition-property: opacity;
-`;
-
-const Gallery = styled.div`
-  position: absolute;
-  inset: 0;
-  display: flex;
-  z-index: 1;
-`;
-
 const Container = styled.div`
   position: relative;
-  cursor: pointer;
   overflow: hidden;
-
   ${(props) => getGridItemSizeStyles(props.$gridItemSize)}
 
-  & img {
-    transform: scale(1.005);
+  cursor: none;
+  @media ${_var.device.tablet_max} {
+    cursor: pointer !important;
+  }
+`;
+
+const handleTransition = (index, active) => {
+  if (active) {
+    return animationTiming;
+  }
+  if (!active && index === 0) {
+    return animationTiming;
+  }
+  if (!active && index > 0) {
+    return 0;
+  }
+};
+
+const handleAnimationDelay = (index, active) => {
+  if (active && index === 0) {
+    return 0;
+  }
+  if (active && index === 1) {
+    return index * animationTiming * 2;
+  }
+  if (active && index > 1) {
+    return index * animationTiming + index * animationTiming;
   }
 
-  & ${Gallery} {
-    & img {
-      transition: ${animationTiming}ms ${_var.cubicBezier};
-      transition-delay: 0ms;
-      transition-property: opacity;
-    }
-
-    & img:nth-child(1) {
-      z-index: 10;
-    }
-
-    & img:nth-child(2) {
-      z-index: 9;
-    }
-
-    & img:nth-child(3) {
-      z-index: 8;
-    }
-
-    & img:nth-child(4) {
-      z-index: 7;
-    }
-
-    & img:nth-child(5) {
-      z-index: 6;
-    }
-
-    & img:nth-child(6) {
-      z-index: 5;
-    }
-
-    & img:nth-child(7) {
-      z-index: 4;
-    }
-
-    & img:nth-child(8) {
-      z-index: 3;
-    }
-
-    & img:nth-child(9) {
-      z-index: 2;
-    }
-
-    & img:nth-child(10) {
-      z-index: 1;
-    }
-    & img:last-child {
-      z-index: -1;
-    }
+  if (!active && index > 0) {
+    return animationTiming;
   }
+};
 
-  & ${MainImage} {
-    opacity: 1;
-    transition: 200ms ${_var.cubicBezier};
-    transition-property: opacity;
-  }
-
-  &:hover {
-    & ${MainImage} {
-      opacity: 0;
-      transition: ${animationTiming}ms ${_var.cubicBezier};
-      transition-property: opacity;
-    }
-
-    & ${Gallery} {
-      & img {
-        opacity: 0;
-        transition: ${animationTiming}ms ${_var.cubicBezier};
-        transition-property: opacity;
-      }
-      & img:nth-child(1) {
-        transition-delay: ${1 * animationTiming + animationTiming}ms;
-      }
-
-      & img:nth-child(2) {
-        transition-delay: ${2 * animationTiming + animationTiming * 2}ms;
-      }
-
-      & img:nth-child(3) {
-        transition-delay: ${3 * animationTiming + animationTiming * 3}ms;
-      }
-
-      & img:nth-child(4) {
-        transition-delay: ${4 * animationTiming + animationTiming * 4}ms;
-      }
-
-      & img:nth-child(5) {
-        transition-delay: ${5 * animationTiming + animationTiming * 5}ms;
-      }
-
-      & img:nth-child(6) {
-        transition-delay: ${6 * animationTiming + animationTiming * 6}ms;
-      }
-
-      & img:nth-child(7) {
-        transition-delay: ${7 * animationTiming + animationTiming * 7}ms;
-      }
-
-      & img:nth-child(8) {
-        transition-delay: ${8 * animationTiming + animationTiming * 8}ms;
-      }
-
-      & img:nth-child(9) {
-        transition-delay: ${9 * animationTiming + animationTiming * 9}ms;
-      }
-
-      & img:nth-child(10) {
-        transition-delay: ${10 * animationTiming + animationTiming * 10}ms;
-      }
-
-      & img:last-child {
-        opacity: 1;
-        z-index: -1;
-      }
-    }
-  }
+const StyledImage = styled(Image)`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: ${(props) => (props.$active && !props.$isLast ? 0 : 1)};
+  transition: ${(props) => handleTransition(props.$index, props.$active)}ms
+    ${_var.cubicBezier};
+  transition-delay: ${(props) =>
+    handleAnimationDelay(props.$index, props.$active)}ms;
+  z-index: ${(props) => props.$zIndex};
 `;
 
 const Placeholder = ({ image, gallery, alt, gridItemSize }) => {
+  const [active, setActive] = useState(false);
+  const [animationKey, setAnimationKey] = useState(0);
+
+  const { cursorType, cursorChangeHandler } = useContext(MouseContext);
+
   const combinedGallery = [
+    {
+      metadata: image.asset.metadata,
+      _id: `${image.asset._id}copy_0`,
+      url: image.asset.url,
+    },
     ...gallery,
     {
       metadata: image.asset.metadata,
-      _id: image.asset._id,
+      _id: `${image.asset._id}copy_1`,
       url: image.asset.url,
     },
   ];
 
+  const handleStartAnimation = () => {
+    setActive(false);
+    setAnimationKey((prev) => prev + 1);
+    setTimeout(() => {
+      setActive(true);
+    }, 1);
+  };
+
+  useEffect(() => {
+    if (active) {
+      const timer = setTimeout(() => {
+        setActive(false);
+      }, animationTiming * combinedGallery.length + animationTiming);
+      return () => clearTimeout(timer);
+    }
+  }, [active, combinedGallery.length]);
+
   return (
-    <Container $gridItemSize={gridItemSize}>
-      <MainImage
-        src={image.asset.url}
-        alt={alt}
-        fill
-        sizes="(min-width: 600px) 50vw, 100vw"
-        placeholder="blur"
-        blurDataURL={image.asset.metadata.blurHash}
-      />
-      <Gallery>
-        {combinedGallery?.map((image, index) => (
+    <Container
+      $gridItemSize={gridItemSize}
+      onMouseEnter={() => {
+        setActive(true), cursorChangeHandler("hovered");
+      }}
+      onMouseLeave={() => {
+        setActive(false), cursorChangeHandler("");
+      }}
+      onClick={() => handleStartAnimation()}
+    >
+      {combinedGallery?.map((image, index) => {
+        return (
           <StyledImage
-            key={image._id}
+            key={`${image._id}_${animationKey}`}
             src={image.url}
             alt={alt}
             fill
             sizes="(min-width: 600px) 50vw, 100vw"
             placeholder="blur"
             blurDataURL={image.metadata.blurHash}
-            // style={{
-            //   transitionDelay: `${
-            //     animationTiming + index * (animationTiming * 2)
-            //   }ms`,
-            // }}
+            $index={index}
+            $active={active}
+            $isLast={index === combinedGallery.length - 1}
+            $zIndex={combinedGallery.length - index}
           />
-        ))}
-      </Gallery>
+        );
+      })}
     </Container>
   );
 };
