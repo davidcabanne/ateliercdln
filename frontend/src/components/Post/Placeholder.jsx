@@ -105,14 +105,14 @@ const Placeholder = ({ image, gallery, alt, gridItemSize }) => {
     setAnimationKey((prev) => prev + 1);
     setTimeout(() => {
       setActive(true);
-    }, 10);
+    }, 1);
   };
 
   useEffect(() => {
     if (active) {
       const timer = setTimeout(() => {
         setActive(false);
-      }, animationTiming * combinedGallery.length + 200);
+      }, animationTiming * combinedGallery.length + animationTiming);
       return () => clearTimeout(timer);
     }
   }, [active, combinedGallery.length]);
