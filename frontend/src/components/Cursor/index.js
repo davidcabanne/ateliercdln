@@ -32,7 +32,7 @@ const Svg = styled.svg`
   opacity: ${(props) => (props.$cursorActive ? 1 : 0)};
 
   &.active {
-    transform: translate(-16px, -16px) rotate(90deg) scale(1.5);
+    transform: translate(-16px, -16px) rotate(90deg) scale(1);
   }
 
   @media ${_var.device.tablet_max} {
