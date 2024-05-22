@@ -1,39 +1,63 @@
 import React, { useContext, useState, useEffect } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import * as _var from "../../styles/variables";
 import useMousePosition from "../../hooks/useMousePosition";
 import { MouseContext } from "../../context/mouseContext";
 
 const animationDuration = "150ms";
 
-const Container = styled.div`
-  position: fixed;
-  z-index: 911;
-  background: white;
-  mix-blend-mode: difference;
+const animationOptions = `
+transform-origin: center;
+  transform: translate(-16px, -16px) rotate(0deg);
+  -webkit-transition-duration: ${animationDuration};
+  transition-duration: ${animationDuration};
+  -webkit-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
+  transition-property: top, left, opacity, transform;
+  will-change: top, left, opacity, transform;
 `;
 
 const Svg = styled.svg`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 32px;
   height: 32px;
   pointer-events: none;
   fill: white;
-  transform-origin: center;
-  transform: translate(-16px, -16px) rotate(0deg) scale(1);
-  -webkit-transition-duration: ${animationDuration};
-  transition-duration: ${animationDuration};
-  -webkit-transition-timing-function: ${_var.cubicBezier};
-  transition-timing-function: ${_var.cubicBezier};
-  transition: ${animationDuration} ${_var.cubicBezier};
-  transition-property: opacity, transform;
-  opacity: ${(props) => (props.$cursorActive ? 1 : 0)};
+  mix-blend-mode: difference;
+  z-index: 9998;
+
+  ${animationOptions}
 
   &.active {
-    transform: translate(-16px, -16px) rotate(90deg) scale(1);
+    transform: translate(-16px, -16px) rotate(90deg);
+
+    ${(props) =>
+      props.$triangle &&
+      css`
+        transform: translate(-11px, -16px) rotate(90deg);
+      `}
   }
+
+  @media ${_var.device.tablet_max} {
+    display: none;
+  }
+`;
+
+const Dot = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  transform: translate(-50%, -50%);
+  background: white;
+  border-radius: 128px;
+  pointer-events: none;
+  mix-blend-mode: difference;
+
+  z-index: 9999;
 
   @media ${_var.device.tablet_max} {
     display: none;
@@ -52,15 +76,27 @@ const Cursor = () => {
   }, [x]);
 
   return (
-    <Container style={{ left: `${x}px`, top: `${y}px` }}>
+    <>
+      <Dot
+        style={{
+          left: `${x}px`,
+          top: `${y}px`,
+          zIndex: 9999,
+        }}
+      />
       <Svg
         xmlns="http://www.w3.org/2000/svg"
         x="0px"
         y="0px"
         viewBox="0 0 90 90"
-        style={{ opacity: cursorType === "hovered" ? 1 : 0 }}
+        style={{
+          opacity: cursorType === "hovered" ? 1 : 0,
+          left: `${x}px`,
+          top: `${y}px`,
+        }}
         className={cursorType === "hovered" ? "active" : ""}
         $cursorActive={cursorActive}
+        $triangle
       >
         <polygon points="90,90 0,90 45,0 " />
       </Svg>
@@ -70,14 +106,18 @@ const Cursor = () => {
         y="0px"
         viewBox="0 0 32 32"
         className={cursorType === "hovered" ? "active" : ""}
-        style={{ opacity: cursorType === "hovered" ? 0 : 1 }}
+        style={{
+          opacity: cursorType === "hovered" ? 0 : 1,
+          left: `${x}px`,
+          top: `${y}px`,
+        }}
         $cursorActive={cursorActive}
       >
         <g>
           <circle cx="16" cy="16" r="16" />
         </g>
       </Svg>
-    </Container>
+    </>
   );
 };
 
