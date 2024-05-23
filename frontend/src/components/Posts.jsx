@@ -22,6 +22,9 @@ const Container = styled.div`
   @media ${_var.device.tablet_max} {
     margin-bottom: 64px;
   }
+  @media ${_var.device.mobileL_max} {
+    padding: 0px ${_var.spaceS};
+  }
 `;
 
 const Grid = styled.section`

@@ -22,6 +22,10 @@ const getGridItemSizeStyles = (size) => {
           height: calc((100vw - 64px) * 2);
           width: calc(100vw - 64px);
         }
+        @media ${_var.device.mobileL_max} {
+          height: calc((100vw - 32px) * 2);
+          width: calc(100vw - 32px);
+        }
       `;
     default:
       return null;

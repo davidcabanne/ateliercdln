@@ -8,10 +8,14 @@ const Container = styled.footer`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: ${_var.spaceXL} ${_var.spaceM};
+  padding: ${_var.spaceXL} ${_var.spaceXL};
   color: white;
   background: black;
 
+  @media ${_var.device.laptop_max} {
+    padding: ${_var.spaceL} ${_var.spaceL};
+  }
+  
   @media ${_var.device.tablet_max} {
     padding: ${_var.spaceL} ${_var.spaceL};
   }
@@ -22,7 +26,6 @@ const Container = styled.footer`
 
 const Wrapper = styled.div`
   width: 100%;
-  max-width: 1376px;
   display: flex;
   flex-direction: column;
 `;

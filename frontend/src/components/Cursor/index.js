@@ -21,8 +21,8 @@ const Svg = styled.svg`
   position: fixed;
   top: 0;
   left: 0;
-  width: 32px;
-  height: 32px;
+  width: 24px;
+  height: 24px;
   pointer-events: none;
   fill: white;
   mix-blend-mode: difference;
@@ -51,7 +51,7 @@ const Dot = styled.div`
   left: 0;
   width: 8px;
   height: 8px;
-  transform: translate(-50%, -50%);
+  transform: translate(-8px, -8px);
   background: white;
   border-radius: 128px;
   pointer-events: none;
