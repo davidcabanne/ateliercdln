@@ -1,4 +1,3 @@
-import { cubicBezier } from "@/styles/variables";
 import styled, { keyframes } from "styled-components";
 import * as _var from "@/styles/variables";
 

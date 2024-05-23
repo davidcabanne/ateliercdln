@@ -1,13 +1,12 @@
 import client from "@/lib/sanityClient";
 
-import HeroAlt from "@/components/Hero/HeroAlt";
+import Hero from "@/components/Hero";
 import Posts from "@/components/Posts";
 
 export default function Home({ posts }) {
-
   return (
     <>
-      <HeroAlt />
+      <Hero />
       <Posts posts={posts} />
     </>
   );
