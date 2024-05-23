@@ -1,3 +1,4 @@
+import Link from "next/link";
 import styled from "styled-components";
 import * as _var from "../../styles/variables";
 
@@ -15,7 +16,7 @@ const Container = styled.footer`
   @media ${_var.device.laptop_max} {
     padding: ${_var.spaceL} ${_var.spaceL};
   }
-  
+
   @media ${_var.device.tablet_max} {
     padding: ${_var.spaceL} ${_var.spaceL};
   }
@@ -44,7 +45,7 @@ const BottomSection = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 56px;
-  border-top: 2px solid white;
+  border-top: 1px solid white;
 
   @media ${_var.device.tablet_max} {
     margin-top: ${_var.spaceM};
@@ -52,6 +53,7 @@ const BottomSection = styled.div`
 
   & p {
     font-size: 22px;
+    font-weight: 300;
     margin-top: 56px;
 
     @media ${_var.device.tablet_max} {
@@ -140,6 +142,12 @@ const Contact = styled.div`
   a {
     font-weight: 200;
   }
+  @media ${_var.device.tablet_min} {
+    & a:hover {
+      text-decoration: underline 1px;
+      text-underline-offset: 4px;
+    }
+  }
 `;
 
 const CallToAction = styled.a`
@@ -148,23 +156,45 @@ const CallToAction = styled.a`
   text-transform: uppercase;
   color: white;
   padding: 16px 24px;
-  background: none;
+  background: black;
   border: 2px solid white;
   border-radius: 128px;
   text-decoration: none;
+  transition: 200ms ${_var.cubicBezier};
+  transition-property: color, background;
 
   & svg {
     width: 16px;
     height: 16px;
     margin-left: 8px;
+
+    & path {
+      stroke: white;
+      transition: 200ms ${_var.cubicBezier};
+      transition-property: stroke;
+    }
   }
 
   @media ${_var.device.tablet_max} {
     font-size: 18px;
     padding: 8px 16px;
+
     & svg {
       width: 12px;
       height: 12px;
+    }
+  }
+
+  @media ${_var.device.tablet_min} {
+    &:hover {
+      background: white;
+      color: black;
+
+      & svg {
+        & path {
+          stroke: black;
+        }
+      }
     }
   }
 `;
@@ -175,7 +205,9 @@ const Footer = () => {
       <Wrapper>
         <TopSection>
           <LeftPanel>
-            <Logo fill="white" />
+            <Link href="#top">
+              <Logo fill="white" />
+            </Link>
             <p>
               Le design au service des porteurs de projets et des entrepreneurs
               souhaitant développer des images de marque uniques et fortes pour
@@ -196,13 +228,11 @@ const Footer = () => {
               >
                 <path
                   d="M17.5864 0.999675L1.36621 17.5405"
-                  stroke="white"
                   strokeWidth="2"
                   strokeMiterlimit="2"
                 />
                 <path
                   d="M1.37891 1.00684L17.5958 1.00684L17.5958 17.546"
-                  stroke="white"
                   strokeWidth="2"
                   strokeMiterlimit="2"
                 />

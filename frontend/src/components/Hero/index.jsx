@@ -21,7 +21,7 @@ const Container = styled.section`
   }
 
   @media ${_var.device.mobileL_max} {
-    padding: 64px ${_var.spaceS};
+    padding: 32px ${_var.spaceS};
   }
 `;
 

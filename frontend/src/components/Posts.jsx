@@ -10,10 +10,6 @@ const Container = styled.div`
   padding: 0px ${_var.spaceM};
   margin-bottom: 256px;
 
-  @media ${_var.device.laptop_min} {
-    padding-top: 128px;
-  }
-
   @media ${_var.device.laptop_max} {
     padding: 0px ${_var.spaceM};
     margin-bottom: 0px;
