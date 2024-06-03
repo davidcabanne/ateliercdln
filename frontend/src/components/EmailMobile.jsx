@@ -9,6 +9,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 50;
+  margin-top: -34px;
 `;
 
 const StyledLink = styled.a`
@@ -21,7 +22,7 @@ const StyledLink = styled.a`
   overflow: hidden;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, .25));
+  filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.25));
 `;
 
 const EmailMobile = () => {
