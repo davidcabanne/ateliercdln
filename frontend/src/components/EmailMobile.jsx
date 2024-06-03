@@ -10,6 +10,11 @@ const Container = styled.div`
   align-items: center;
   z-index: 50;
   margin-top: -34px;
+
+
+  @media ${_var.device.tablet_min} {
+    display: none;
+  }
 `;
 
 const StyledLink = styled.a`
