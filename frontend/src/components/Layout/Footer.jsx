@@ -5,6 +5,7 @@ import * as _var from "../../styles/variables";
 import Logo from "../Logo";
 
 const Container = styled.footer`
+  position: relative;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -12,6 +13,7 @@ const Container = styled.footer`
   padding: ${_var.spaceXL} ${_var.spaceXL};
   color: white;
   background: black;
+  z-index: 60;
 
   @media ${_var.device.laptop_max} {
     padding: ${_var.spaceL} ${_var.spaceL};

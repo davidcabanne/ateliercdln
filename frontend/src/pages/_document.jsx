@@ -31,58 +31,68 @@ class MyDocument extends Document {
   render() {
     return (
       <Html lang="en">
-        <title>Atelier CDLN</title>
-        <meta name="description" content="description" />
+        <Head>
+          <title>Atelier CDLN</title>
+          <meta
+            name="description"
+            content="Le design au service des porteurs de projets et des entrepreneurs souhaitant développer des images de marque uniques et fortes pour que leurs idées novatrices et porteuses de sens soient adoptées par le plus grand nombre."
+          />
 
-        <meta property="og:title" content="Atelier CDLN" />
-        <meta property="og:url" content="https://www.synchronized.tv" />
-        <meta
-          property="og:site_name"
-          content="Synchronized | In-Video Intelligence"
-        />
-        <meta property="og:type" content="website" />
-        <meta property="og:description" content="description" />
-        <meta property="og:image:secure_url" content="url" />
-        <meta property="og:image" content="url" />
-        <meta property="og:image:type" content="image/jpg" />
-        <meta property="og:image:width" content="384" />
-        <meta property="og:image:height" content="216" />
+          <meta property="og:title" content="Atelier CDLN" />
+          <meta property="og:url" content="https://www.ateliercdln.com" />
+          <meta property="og:site_name" content="Atelier CDLN" />
+          <meta property="og:type" content="website" />
+          <meta
+            property="og:description"
+            content="Le design au service des porteurs de projets et des entrepreneurs souhaitant développer des images de marque uniques et fortes pour que leurs idées novatrices et porteuses de sens soient adoptées par le plus grand nombre."
+          />
+          <meta property="og:image" content="/atelierCDLN_card.jpg" />
+          <meta
+            property="og:image:secure_url"
+            content="/atelierCDLN_card.jpg"
+          />
+          <meta property="og:image:type" content="image/jpeg" />
+          <meta property="og:image:width" content="1557" />
+          <meta property="og:image:height" content="1001" />
 
-        <meta name="twitter:card" content="Atelier CDLN" />
-        <meta name="twitter:site" content="@atelierCdln" />
-        <meta name="twitter:title" content="Atelier CDLN" />
-        <meta name="twitter:description" content="description" />
-        <meta name="twitter:image" content="url" />
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:site" content="@atelierCdln" />
+          <meta name="twitter:title" content="Atelier CDLN" />
+          <meta
+            name="twitter:description"
+            content="Le design au service des porteurs de projets et des entrepreneurs souhaitant développer des images de marque uniques et fortes pour que leurs idées novatrices et porteuses de sens soient adoptées par le plus grand nombre."
+          />
+          <meta name="twitter:image" content="/atelierCDLN_card.jpg" />
 
-        <meta
-          name="keywords"
-          content="Atelier Cdln, Theo Chapdelaine, graphic designer, motion designer, video, videos, film, films, editing, projects"
-        />
-        <meta name="theme-color" content="#ffffff" />
-        <link
-          rel="icon"
-          type="image/x-icon"
-          sizes="any"
-          href="/images/favicon.ico"
-        />
-        <link
-          rel="apple-touch-icon"
-          sizes="180x180"
-          href="/images/favicon.ico"
-        />
-        <link
-          rel="icon"
-          type="image/x-icon"
-          sizes="32x32"
-          href="/images/favicon.ico"
-        />
-        <link
-          rel="icon"
-          type="image/x-icon"
-          sizes="16x16"
-          href="/images/favicon.ico"
-        />
-        <Head />
+          <meta
+            name="keywords"
+            content="Atelier Cdln, Theo Chapdelaine,  art direction, graphic design, motion design, web design"
+          />
+          <meta name="theme-color" content="#ffffff" />
+          <link
+            rel="icon"
+            type="image/x-icon"
+            sizes="any"
+            href="/favicon.ico"
+          />
+          <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="/favicon.ico"
+          />
+          <link
+            rel="icon"
+            type="image/x-icon"
+            sizes="32x32"
+            href="/favicon.ico"
+          />
+          <link
+            rel="icon"
+            type="image/x-icon"
+            sizes="16x16"
+            href="/favicon.ico"
+          />
+        </Head>
         <body>
           <Main />
           <NextScript />
