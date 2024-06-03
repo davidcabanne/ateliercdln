@@ -1,11 +1,13 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import Image from "next/image";
 import styled, { css } from "styled-components";
 import * as _var from "../../styles/variables";
 
 import { MouseContext } from "@/context/mouseContext";
+import useElementOnScreen from "@/hooks/useElementOnScreen";
 
 const animationTiming = 500;
+const extraPause = 1000;
 
 const getGridItemSizeStyles = (size) => {
   switch (size) {
@@ -43,32 +45,18 @@ const Container = styled.div`
   }
 `;
 
-const handleTransition = (index, active) => {
-  if (active) {
+const handleTransition = (index, active, transitioningToFirst) => {
+  if (active || transitioningToFirst) {
     return animationTiming;
   }
-  if (!active && index === 0) {
-    return animationTiming;
-  }
-  if (!active && index > 0) {
-    return 0;
-  }
+  return 0;
 };
 
-const handleAnimationDelay = (index, active) => {
-  if (active && index === 0) {
-    return 0;
+const handleAnimationDelay = (index, active, length, transitioningToFirst) => {
+  if (active || transitioningToFirst) {
+    return index * (animationTiming + extraPause);
   }
-  if (active && index === 1) {
-    return index * animationTiming * 2;
-  }
-  if (active && index > 1) {
-    return index * animationTiming + index * animationTiming;
-  }
-
-  if (!active && index > 0) {
-    return animationTiming;
-  }
+  return 0;
 };
 
 const StyledImage = styled(Image)`
@@ -77,18 +65,35 @@ const StyledImage = styled(Image)`
   height: 100%;
   object-fit: cover;
   opacity: ${(props) => (props.$active && !props.$isLast ? 0 : 1)};
-  transition: ${(props) => handleTransition(props.$index, props.$active)}ms
+  transition: ${(props) =>
+      handleTransition(
+        props.$index,
+        props.$active,
+        props.$transitioningToFirst
+      )}ms
     ${_var.cubicBezier};
   transition-delay: ${(props) =>
-    handleAnimationDelay(props.$index, props.$active)}ms;
+    handleAnimationDelay(
+      props.$index,
+      props.$active,
+      props.$length,
+      props.$transitioningToFirst
+    )}ms;
   z-index: ${(props) => props.$zIndex};
 `;
 
 const Placeholder = ({ image, gallery, alt, gridItemSize }) => {
   const [active, setActive] = useState(false);
   const [animationKey, setAnimationKey] = useState(0);
+  const [hovered, setHovered] = useState(false);
+  const [transitioningToFirst, setTransitioningToFirst] = useState(false);
 
-  const { cursorType, cursorChangeHandler } = useContext(MouseContext);
+  const { cursorChangeHandler } = useContext(MouseContext);
+  const [containerRef, isVisible] = useElementOnScreen({
+    root: null,
+    rootMargin: "-50% 0px",
+    threshold: 0,
+  });
 
   const combinedGallery = [
     {
@@ -99,40 +104,70 @@ const Placeholder = ({ image, gallery, alt, gridItemSize }) => {
     ...gallery,
     {
       metadata: image.asset.metadata,
-      _id: `${image.asset._id}copy_1`,
+      _id: `${image.asset._id}copy_1}`,
       url: image.asset.url,
     },
   ];
 
-  const handleStartAnimation = () => {
+  const startAnimation = useCallback(() => {
     setActive(false);
     setAnimationKey((prev) => prev + 1);
     setTimeout(() => {
       setActive(true);
     }, 1);
-  };
+  }, []);
 
   useEffect(() => {
-    if (active) {
-      const timer = setTimeout(() => {
-        setActive(false);
-      }, animationTiming * combinedGallery.length + animationTiming);
-      return () => clearTimeout(timer);
+    let timer;
+    if (active && (hovered || (window.innerWidth < 768 && isVisible))) {
+      timer = setTimeout(() => {
+        startAnimation();
+      }, (animationTiming + extraPause) * combinedGallery.length);
     }
-  }, [active, combinedGallery.length]);
+    return () => clearTimeout(timer);
+  }, [active, hovered, isVisible, startAnimation, combinedGallery.length]);
+
+  useEffect(() => {
+    if (window.innerWidth < 768) {
+      if (isVisible) {
+        setActive(true);
+      } else {
+        setHovered(false);
+        setActive(false);
+        setTransitioningToFirst(true);
+        setTimeout(() => {
+          setAnimationKey(0);
+          setTransitioningToFirst(false);
+        }, animationTiming);
+      }
+    }
+  }, [isVisible]);
+
+  const handleMouseLeave = () => {
+    setHovered(false);
+    setActive(false);
+    setTransitioningToFirst(true);
+    setTimeout(() => {
+      setAnimationKey(0);
+      setTransitioningToFirst(false);
+    }, animationTiming);
+    cursorChangeHandler("");
+  };
 
   return (
     <Container
       $gridItemSize={gridItemSize}
+      ref={containerRef}
       onMouseEnter={() => {
-        setActive(true), cursorChangeHandler("hovered");
+        if (window.innerWidth >= 768) {
+          setHovered(true);
+          setActive(true);
+          cursorChangeHandler("hovered");
+        }
       }}
-      onMouseLeave={() => {
-        setActive(false), cursorChangeHandler("");
-      }}
-      onClick={() => handleStartAnimation()}
+      onMouseLeave={handleMouseLeave}
     >
-      {combinedGallery?.map((image, index) => {
+      {combinedGallery.map((image, index) => {
         return (
           <StyledImage
             key={`${image._id}_${animationKey}`}
@@ -146,6 +181,8 @@ const Placeholder = ({ image, gallery, alt, gridItemSize }) => {
             $active={active}
             $isLast={index === combinedGallery.length - 1}
             $zIndex={combinedGallery.length - index}
+            $length={combinedGallery.length}
+            $transitioningToFirst={transitioningToFirst}
           />
         );
       })}
