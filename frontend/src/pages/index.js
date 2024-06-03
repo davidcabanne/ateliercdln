@@ -2,12 +2,18 @@ import client from "@/lib/sanityClient";
 
 import Hero from "@/components/Hero";
 import Posts from "@/components/Posts";
+import Email from "@/components/Email";
+import EmailMobile from "@/components/EmailMobile";
+import Footer from "@/components/Layout/Footer";
 
 export default function Home({ posts }) {
   return (
     <>
       <Hero />
+      <EmailMobile />
       <Posts posts={posts} />
+      <Email />
+      <Footer />
     </>
   );
 }
