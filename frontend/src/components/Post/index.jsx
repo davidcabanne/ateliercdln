@@ -93,6 +93,20 @@ const Post = ({ post }) => {
     threshold: 0.05,
   });
 
+  const combinedGallery = [
+    {
+      metadata: Image.asset.metadata,
+      _id: `${Image.asset._id}copy_0`,
+      url: Image.asset.url,
+    },
+    ...gallery,
+    {
+      metadata: Image.asset.metadata,
+      _id: `${Image.asset._id}copy_1`,
+      url: Image.asset.url,
+    },
+  ];
+
   return (
     <Container
       ref={containerRef}
@@ -102,7 +116,7 @@ const Post = ({ post }) => {
     >
       <Placeholder
         image={Image}
-        gallery={gallery}
+        gallery={combinedGallery}
         alt={title}
         gridItemSize={gridItemSize}
       />

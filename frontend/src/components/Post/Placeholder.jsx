@@ -82,7 +82,7 @@ const StyledImage = styled(Image)`
   z-index: ${(props) => props.$zIndex};
 `;
 
-const Placeholder = ({ image, gallery, alt, gridItemSize }) => {
+const Placeholder = ({ gallery, alt, gridItemSize }) => {
   const [active, setActive] = useState(false);
   const [animationKey, setAnimationKey] = useState(0);
   const [hovered, setHovered] = useState(false);
@@ -94,20 +94,6 @@ const Placeholder = ({ image, gallery, alt, gridItemSize }) => {
     rootMargin: "-50% 0px",
     threshold: 0,
   });
-
-  const combinedGallery = [
-    {
-      metadata: image.asset.metadata,
-      _id: `${image.asset._id}copy_0`,
-      url: image.asset.url,
-    },
-    ...gallery,
-    {
-      metadata: image.asset.metadata,
-      _id: `${image.asset._id}copy_1}`,
-      url: image.asset.url,
-    },
-  ];
 
   const startAnimation = useCallback(() => {
     setActive(false);
@@ -122,10 +108,10 @@ const Placeholder = ({ image, gallery, alt, gridItemSize }) => {
     if (active && (hovered || (window.innerWidth < 768 && isVisible))) {
       timer = setTimeout(() => {
         startAnimation();
-      }, (animationTiming + extraPause) * combinedGallery.length);
+      }, (animationTiming + extraPause) * gallery.length);
     }
     return () => clearTimeout(timer);
-  }, [active, hovered, isVisible, startAnimation, combinedGallery.length]);
+  }, [active, hovered, isVisible, startAnimation, gallery.length]);
 
   useEffect(() => {
     if (window.innerWidth < 768) {
@@ -167,7 +153,7 @@ const Placeholder = ({ image, gallery, alt, gridItemSize }) => {
       }}
       onMouseLeave={handleMouseLeave}
     >
-      {combinedGallery.map((image, index) => {
+      {gallery.map((image, index) => {
         return (
           <StyledImage
             key={`${image._id}_${animationKey}`}
@@ -179,9 +165,9 @@ const Placeholder = ({ image, gallery, alt, gridItemSize }) => {
             blurDataURL={image.metadata.blurHash}
             $index={index}
             $active={active}
-            $isLast={index === combinedGallery.length - 1}
-            $zIndex={combinedGallery.length - index}
-            $length={combinedGallery.length}
+            $isLast={index === gallery.length - 1}
+            $zIndex={gallery.length - index}
+            $length={gallery.length}
             $transitioningToFirst={transitioningToFirst}
           />
         );
