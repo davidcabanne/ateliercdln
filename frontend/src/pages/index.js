@@ -5,6 +5,7 @@ import Posts from "@/components/Posts";
 import Email from "@/components/Email";
 import EmailMobile from "@/components/EmailMobile";
 import Footer from "@/components/Layout/Footer";
+import RandomShape from "@/components/RandomShape";
 
 export default function Home({ posts }) {
   return (
@@ -14,6 +15,8 @@ export default function Home({ posts }) {
       <Posts posts={posts} />
       <Email />
       <Footer />
+      <RandomShape shape="circle" />
+      <RandomShape shape="square" />
     </>
   );
 }

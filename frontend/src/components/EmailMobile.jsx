@@ -9,7 +9,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 50;
-  margin-top: -34px;
+  margin-top: -42px;
 
 
   @media ${_var.device.tablet_min} {
@@ -18,7 +18,8 @@ const Container = styled.div`
 `;
 
 const StyledLink = styled.a`
-  font-size: 14px;
+  font-size: 20px;
+  color: white !important;
   text-transform: uppercase;
   text-decoration: none;
   background: rgba(255, 255, 255, 0.5);

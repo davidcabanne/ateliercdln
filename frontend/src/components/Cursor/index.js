@@ -64,6 +64,11 @@ const Dot = styled.div`
   }
 `;
 
+const Polygon = styled.polygon`
+  opacity: 1;
+  transition: transform 200ms ${_var.cubicBezier};
+`;
+
 const Cursor = () => {
   const [cursorActive, setCursorActive] = useState(false);
   const { cursorType, cursorChangeHandler } = useContext(MouseContext);
@@ -114,6 +119,13 @@ const Cursor = () => {
         $cursorActive={cursorActive}
       >
         <g>
+          <Polygon
+            points="0,0 32,0 32,32 0,32"
+            style={{
+              transform:
+                cursorType === "shapeHovered" ? "scale(1)" : "scale(0)",
+            }}
+          />
           <circle cx="16" cy="16" r="16" />
         </g>
       </Svg>
