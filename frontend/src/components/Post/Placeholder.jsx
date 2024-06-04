@@ -45,7 +45,7 @@ const Container = styled.div`
   }
 `;
 
-const handleTransition = (index, active, transitioningToFirst) => {
+const handleTransition = (index, active, transitioningToFirst, length) => {
   if (active || transitioningToFirst) {
     return animationTiming;
   }
@@ -53,8 +53,11 @@ const handleTransition = (index, active, transitioningToFirst) => {
 };
 
 const handleAnimationDelay = (index, active, length, transitioningToFirst) => {
-  if (active || transitioningToFirst) {
+  if (active) {
     return index * (animationTiming + extraPause);
+  }
+  if (transitioningToFirst) {
+    return 0;
   }
   return 0;
 };
@@ -69,7 +72,8 @@ const StyledImage = styled(Image)`
       handleTransition(
         props.$index,
         props.$active,
-        props.$transitioningToFirst
+        props.$transitioningToFirst,
+        props.$length
       )}ms
     ${_var.cubicBezier};
   transition-delay: ${(props) =>
