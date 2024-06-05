@@ -19,12 +19,13 @@ const Container = styled.div`
 
 const StyledLink = styled.a`
   font-size: 20px;
-  color: white !important;
+  color: black !important;
   text-transform: uppercase;
   text-decoration: none;
   background: rgba(255, 255, 255, 0.5);
   padding: ${_var.spaceXS} ${_var.spaceS};
   border-radius: 128px;
+  border: 1px solid rgba(255, 255, 255, .5);
   overflow: hidden;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);

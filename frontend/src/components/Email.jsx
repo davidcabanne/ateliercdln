@@ -1,5 +1,8 @@
+import { useContext } from "react";
 import styled, { keyframes } from "styled-components";
 import * as _var from "../styles/variables";
+
+import { MouseContext } from "@/context/mouseContext";
 
 const Container = styled.section`
   position: relative;
@@ -30,6 +33,26 @@ const StyledLink = styled.a`
   width: 100%;
   max-width: 1450px;
   animation: ${translation} 10000ms ease-in-out alternate infinite;
+  cursor: none;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 8%;
+    background: black;
+    opacity: 0;
+    transition: 150ms ${_var.cubicBezier};
+    transition-property: opacity;
+  }
+
+  &:hover {
+    &::after {
+      opacity: 1;
+    }
+  }
 `;
 
 const Svg = styled.svg`
@@ -38,6 +61,8 @@ const Svg = styled.svg`
 `;
 
 const Email = () => {
+  const { cursorChangeHandler } = useContext(MouseContext);
+
   return (
     <Container>
       <StyledLink
@@ -45,6 +70,12 @@ const Email = () => {
         target="_blank"
         rel="noopener noreferrer"
         style={{ marginRight: `${translateAmount}` }}
+        onMouseEnter={() => {
+          cursorChangeHandler("hovered");
+        }}
+        onMouseLeave={() => {
+          cursorChangeHandler("");
+        }}
       >
         <Svg
           viewBox="0 0 1450 96"
