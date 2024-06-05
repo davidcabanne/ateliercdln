@@ -182,8 +182,8 @@ const CallToAction = styled.a`
     padding: 8px 16px;
 
     & svg {
-      width: 12px;
-      height: 12px;
+      width: 8px;
+      height: 8px;
     }
   }
 
