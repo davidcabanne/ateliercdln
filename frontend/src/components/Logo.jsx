@@ -8,12 +8,17 @@ const Container = styled.div`
   gap: ${_var.spaceXS};
 `;
 
-const Logo = ({ fill, rotate }) => {
+const Logo = ({ fill, rotate, width }) => {
   return (
     <Container>
-      <ShapeIcon shape="circle" fill={fill} width={48} />
-      <ShapeIcon shape="square" fill={fill} width={48} />
-      <ShapeIcon shape="triangle" fill={fill} width={48} rotate={rotate} />
+      <ShapeIcon shape="circle" fill={fill} width={width ? width : 48} />
+      <ShapeIcon shape="square" fill={fill} width={width ? width : 48} />
+      <ShapeIcon
+        shape="triangle"
+        fill={fill}
+        width={width ? width : 48}
+        rotate={rotate}
+      />
     </Container>
   );
 };

@@ -30,7 +30,7 @@ const Header = () => {
   return (
     <Container id="#top">
       <a href="/">
-        <Logo fill="black" header />
+        <Logo fill="black" width={32} />
       </a>
     </Container>
   );
