@@ -115,13 +115,13 @@ p {
 
 function MyApp({ Component, pageProps }) {
   return (
-    <RootLayout>
-      <MouseContextProvider>
+    <MouseContextProvider>
+      <RootLayout>
         <Cursor />
         <GlobalStyle />
         <Component {...pageProps} />
-      </MouseContextProvider>
-    </RootLayout>
+      </RootLayout>
+    </MouseContextProvider>
   );
 }
 

@@ -67,6 +67,8 @@ const StyledImage = styled(Image)`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  user-select: none;
+  -webkit-user-select: none;
   opacity: ${(props) => (props.$active && !props.$isLast ? 0 : 1)};
   transition: ${(props) =>
       handleTransition(

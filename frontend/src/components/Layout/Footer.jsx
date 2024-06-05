@@ -4,6 +4,13 @@ import * as _var from "../../styles/variables";
 
 import Logo from "../Logo";
 
+const userSelectStyles = `
+&::selection {
+  color: black;
+  background: white;
+}
+`;
+
 const Container = styled.footer`
   position: relative;
   width: 100%;
@@ -57,6 +64,7 @@ const BottomSection = styled.div`
     font-size: 22px;
     font-weight: 300;
     margin-top: 56px;
+    ${userSelectStyles}
 
     @media ${_var.device.tablet_max} {
       font-size: 10px;
@@ -77,6 +85,7 @@ const LeftPanel = styled.div`
   & p {
     font-size: 22px;
     max-width: 440px;
+    ${userSelectStyles}
 
     @media ${_var.device.tablet_max} {
       font-size: 10px;
@@ -126,6 +135,7 @@ const Contact = styled.div`
     font-size: 22px;
     text-transform: uppercase;
     text-align: right;
+    ${userSelectStyles}
 
     @media ${_var.device.tablet_max} {
       font-size: 10px;
@@ -164,6 +174,7 @@ const CallToAction = styled.a`
   text-decoration: none;
   transition: 200ms ${_var.cubicBezier};
   transition-property: color, background;
+  ${userSelectStyles}
 
   & svg {
     width: 16px;

@@ -75,6 +75,11 @@ const Title = styled.h4`
   font-weight: 400;
   text-transform: uppercase;
 
+  &::selection {
+    color: white;
+    background: black;
+  }
+
   @media ${_var.device.laptop_max} {
     font-size: clamp(8px, 3.5vw, 24px);
   }

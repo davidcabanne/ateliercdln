@@ -12,11 +12,12 @@ const Shape = styled.div`
   max-width: 256px;
   aspect-ratio: 1 / 1;
   background: transparent;
-  border: 1px solid rgba(255,255,255, .5);
+  border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 50%;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   box-shadow: ${_var.cardShadowLarge};
+  z-index: 50;
 
   @media ${_var.device.tablet_max} {
     display: none;
