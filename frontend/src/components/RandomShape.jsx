@@ -12,6 +12,8 @@ const Shape = styled.div`
   max-width: 256px;
   aspect-ratio: 1 / 1;
   background: transparent;
+  border: 1px solid rgba(255,255,255, .5);
+  border-radius: 50%;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   box-shadow: ${_var.cardShadowLarge};
@@ -21,7 +23,7 @@ const Shape = styled.div`
   }
 `;
 
-const RandomShape = ({ shape }) => {
+const RandomShape = () => {
   const [position, setPosition] = useState({ top: 0, left: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
@@ -119,7 +121,6 @@ const RandomShape = ({ shape }) => {
       style={{
         top: `${position.top}px`,
         left: `${position.left}px`,
-        borderRadius: shape === "circle" ? "50%" : "4px",
       }}
     />
   );

@@ -75,11 +75,11 @@ const LeftPanel = styled.div`
   }
 
   & p {
-    font-size: 24px;
+    font-size: 22px;
     max-width: 440px;
 
     @media ${_var.device.tablet_max} {
-      font-size: 12px;
+      font-size: 10px;
       max-width: 100%;
     }
   }
@@ -128,7 +128,7 @@ const Contact = styled.div`
     text-align: right;
 
     @media ${_var.device.tablet_max} {
-      font-size: 12px;
+      font-size: 10px;
     }
   }
 
@@ -154,7 +154,7 @@ const Contact = styled.div`
 
 const CallToAction = styled.a`
   width: fit-content;
-  font-size: 24px;
+  font-size: 22px;
   text-transform: uppercase;
   color: white;
   padding: 16px 24px;
@@ -178,7 +178,7 @@ const CallToAction = styled.a`
   }
 
   @media ${_var.device.tablet_max} {
-    font-size: 18px;
+    font-size: 12px;
     padding: 8px 16px;
 
     & svg {
