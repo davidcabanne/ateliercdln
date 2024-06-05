@@ -15,8 +15,9 @@ export default function Home({ posts }) {
       <Posts posts={posts} />
       <Email />
       <Footer />
-      <RandomShape shape="circle" />
-      <RandomShape shape="square" />
+      <RandomShape />
+      <RandomShape />
+      <RandomShape />
     </>
   );
 }
