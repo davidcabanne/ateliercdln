@@ -3,14 +3,14 @@ import * as _var from "../styles/variables";
 
 const Container = styled.div`
   position: sticky;
-  top: calc(100vh - 24px - 32px);
+  top: calc(100vh - 24px - 40px);
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 50;
   margin-top: -42px;
-
+  z-index: 100;
 
   @media ${_var.device.tablet_min} {
     display: none;
@@ -25,7 +25,7 @@ const StyledLink = styled.a`
   background: rgba(255, 255, 255, 0.5);
   padding: ${_var.spaceXS} ${_var.spaceS};
   border-radius: 128px;
-  border: 1px solid rgba(255, 255, 255, .5);
+  border: 1px solid rgba(255, 255, 255, 0.5);
   overflow: hidden;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);

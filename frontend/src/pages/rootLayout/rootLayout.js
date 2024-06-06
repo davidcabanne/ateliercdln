@@ -15,6 +15,7 @@ const Page = styled.div`
 
   @media ${_var.device.tablet_max} {
     padding-top: 64px;
+    overflow-x: visible;
   }
 `;
 
