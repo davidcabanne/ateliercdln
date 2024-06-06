@@ -10,7 +10,7 @@ const Container = styled.div`
   align-items: center;
   z-index: 50;
   margin-top: -42px;
-  z-index: 100;
+  z-index: 40;
 
   @media ${_var.device.tablet_min} {
     display: none;
