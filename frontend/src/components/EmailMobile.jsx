@@ -30,17 +30,21 @@ const StyledLink = styled.a`
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.25));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 `;
 
 const EmailMobile = () => {
   return (
     <Container>
       <StyledLink
-        href="mailto: hello@ateliercdln.com"
+        href="mailto: theo.chapdelaine@gmail.com"
         target="_blank"
         rel="noopener noreferrer"
       >
-        hello@ateliercdln.com
+        UN PROJET ? LET’S TALK!
       </StyledLink>
     </Container>
   );

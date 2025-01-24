@@ -228,7 +228,7 @@ const Footer = () => {
               par le plus grand nombre.
             </p>
             <CallToAction
-              href="mailto: hello@ateliercdln.com"
+              href="mailto: theo.chapdelaine@gmail.com"
               target="_blank"
               rel="noopener noreferrer"
             >
