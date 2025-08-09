@@ -278,7 +278,7 @@ const Footer = () => {
           </RightPanel>
         </TopSection>
         <BottomSection>
-          <p>Atelier CDLN 2024</p>
+          <p>Atelier CDLN 2025</p>
           <p>Tous droits réservés</p>
         </BottomSection>
       </Wrapper>

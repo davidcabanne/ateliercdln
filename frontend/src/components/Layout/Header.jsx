@@ -12,8 +12,8 @@ const Container = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   z-index: 100;
 

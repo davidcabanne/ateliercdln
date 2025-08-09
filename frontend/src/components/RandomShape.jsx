@@ -14,8 +14,8 @@ const Shape = styled.div`
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 50%;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   box-shadow: ${_var.cardShadowLarge};
   z-index: 50;
 

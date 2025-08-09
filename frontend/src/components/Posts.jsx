@@ -8,16 +8,11 @@ const Container = styled.div`
   position: relative;
   width: 100%;
   padding: 0px ${_var.spaceM};
-  margin-bottom: 256px;
 
   @media ${_var.device.laptop_max} {
     padding: 0px ${_var.spaceM};
-    margin-bottom: 0px;
   }
 
-  @media ${_var.device.tablet_max} {
-    margin-bottom: 64px;
-  }
   @media ${_var.device.mobileL_max} {
     padding: 0px ${_var.spaceS};
   }
@@ -27,13 +22,8 @@ const Grid = styled.section`
   position: relative;
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 80px;
-
-  @media ${_var.device.laptop_max} {
-    grid-template-columns: 1fr;
-    gap: ${_var.spaceL};
-  }
+  grid-template-columns: 1fr;
+  gap: ${_var.spaceM};
 `;
 
 const Posts = ({ posts }) => {

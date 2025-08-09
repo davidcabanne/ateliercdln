@@ -21,53 +21,6 @@ const Container = styled.div`
     opacity: 1;
     transform: translateY(0px);
   }
-
-  @media ${_var.device.laptop_min} {
-    grid-row: ${(props) => (props.$gridItemSize === "large" ? "span 2" : "")};
-    grid-column: ${(props) =>
-      props.$gridItemSize === "large" ? "span 2" : ""};
-    grid-row: ${(props) => (props.$gridItemSize === "medium" ? "span 2" : "")};
-
-    &:first-child {
-    }
-    &:nth-child(2) {
-    }
-    &:nth-child(3) {
-      height: calc(100% + 256px);
-    }
-    &:nth-child(4) {
-    }
-    &:nth-child(5) {
-      transform: translateY(256px);
-    }
-    &:nth-child(6) {
-    }
-    &:nth-child(7) {
-      transform: translateY(256px);
-    }
-    &:nth-child(8) {
-      transform: translateY(256px);
-    }
-    &:nth-child(9) {
-      height: calc(100% + 256px);
-    }
-    &:nth-child(10) {
-      transform: translateY(256px);
-    }
-    &:nth-child(11) {
-      transform: translateY(256px);
-    }
-    &:nth-child(12) {
-      transform: translateY(256px);
-    }
-    &:nth-child(13) {
-      transform: translateY(256px);
-    }
-  }
-  @media ${_var.device.laptop_max} {
-    grid-template-columns: 1fr;
-    grid-row: ${(props) => (props.$gridItemSize === "medium" ? "span 2" : "")};
-  }
 `;
 
 const Title = styled.h4`
@@ -92,25 +45,14 @@ const Title = styled.h4`
 const Post = ({ post }) => {
   const { id, title, Image, gallery, gridItemSize } = post;
 
+  const mainImage = Image.asset;
+  const hoverImage = gallery[0];
+
   const [containerRef, isVisible] = useElementOnScreen({
     root: null,
     rootMargin: "0px",
-    threshold: 0.05,
+    threshold: 0.15,
   });
-
-  const combinedGallery = [
-    {
-      metadata: Image.asset.metadata,
-      _id: `${Image.asset._id}copy_0`,
-      url: Image.asset.url,
-    },
-    ...gallery,
-    {
-      metadata: Image.asset.metadata,
-      _id: `${Image.asset._id}copy_1`,
-      url: Image.asset.url,
-    },
-  ];
 
   return (
     <Container
@@ -119,12 +61,7 @@ const Post = ({ post }) => {
       $gridItemSize={gridItemSize}
       className={isVisible ? "active" : ""}
     >
-      <Placeholder
-        image={Image}
-        gallery={combinedGallery}
-        alt={title}
-        gridItemSize={gridItemSize}
-      />
+      <Placeholder mainImage={mainImage} hoverImage={hoverImage} alt={title} />
       <Title>{title}</Title>
     </Container>
   );
