@@ -75,8 +75,8 @@ export default defineType({
         Rule.min(8).max(8).error('You must upload exactly 8 images in the gallery.'),
     }),
     defineField({
-      title: 'video',
-      name: 'Video',
+      name: 'video',
+      title: 'Video',
       type: 'url',
     }),
     defineField({
