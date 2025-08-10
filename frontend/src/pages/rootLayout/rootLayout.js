@@ -11,10 +11,14 @@ const Page = styled.div`
   position: relative;
   padding-top: ${_var.headerHeight};
   width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   overflow-x: hidden;
 
   @media ${_var.device.tablet_max} {
-    padding-top: 64px;
+    padding-top: ${_var.spaceL};
     overflow-x: visible;
   }
 `;

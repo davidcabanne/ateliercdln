@@ -58,6 +58,8 @@ export const spaceXL = "128px";
 
 export const headerHeight = "80px";
 
+export const maxWidth = "1980px";
+
 // ANIMATION STYLES
 export const cubicBezier = "cubic-bezier(0.79, 0.14, 0.15, 0.86)";
 

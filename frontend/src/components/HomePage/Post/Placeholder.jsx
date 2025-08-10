@@ -1,7 +1,7 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import Image from "next/image";
-import styled, { css } from "styled-components";
-import * as _var from "../../styles/variables";
+import styled from "styled-components";
+import * as _var from "../../../styles/variables";
 
 import { MouseContext } from "@/context/mouseContext";
 
@@ -39,7 +39,7 @@ const StyledImage = styled(Image)`
   will-change: transform, opacity;
 `;
 
-const Placeholder = ({ mainImage, hoverImage, alt }) => {
+const Placeholder = ({ mainImage, hoverImage }) => {
   const { cursorChangeHandler } = useContext(MouseContext);
 
   const handleMouseLeave = () => {
@@ -58,7 +58,7 @@ const Placeholder = ({ mainImage, hoverImage, alt }) => {
     >
       <StyledImage
         src={mainImage.url}
-        alt={alt}
+        alt={mainImage.alt}
         fill
         sizes="(min-width: 600px) 50vw, 100vw"
         placeholder="blur"
@@ -67,7 +67,7 @@ const Placeholder = ({ mainImage, hoverImage, alt }) => {
       />
       <StyledImage
         src={hoverImage.url}
-        alt={alt}
+        alt={hoverImage.alt}
         fill
         sizes="(min-width: 600px) 50vw, 100vw"
         placeholder="blur"
