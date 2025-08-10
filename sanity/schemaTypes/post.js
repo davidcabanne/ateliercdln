@@ -12,6 +12,75 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'subtitle',
+      title: 'Subtitle',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'city',
+      title: 'City',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'tags',
+      title: 'Tags',
+      type: 'array',
+      of: [{type: 'string'}],
+      options: {
+        layout: 'checkbox',
+        list: [
+          {title: 'COMMUNICATION 360', value: 'COMMUNICATION 360'},
+          {title: 'DESIGN PRODUIT', value: 'DESIGN PRODUIT'},
+          {title: 'IDENTITÉ VISUELLE', value: 'IDENTITÉ VISUELLE'},
+          {title: 'LOGO DESIGN', value: 'LOGO DESIGN'},
+          {title: 'SIGNALÉTIQUE', value: 'SIGNALÉTIQUE'},
+          {title: 'WEB DESIGN', value: 'WEB DESIGN'},
+        ],
+      },
+      validation: (Rule) => Rule.required().max(3).unique(),
+    }),
+    defineField({
+      name: 'postDescription',
+      title: 'Post Description',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'gallery',
+      title: 'Gallery',
+      type: 'array',
+      of: [
+        {
+          type: 'image',
+          fields: [
+            {
+              name: 'alt',
+              title: 'Alternative text',
+              type: 'string',
+              description: 'Describe the image for accessibility and SEO.',
+              validation: (Rule) => Rule.required().error('Alt text is required'),
+            },
+          ],
+          options: {
+            hotspot: true,
+          },
+        },
+      ],
+      options: {
+        layout: 'grid',
+      },
+      validation: (Rule) =>
+        Rule.min(8).max(8).error('You must upload exactly 8 images in the gallery.'),
+    }),
+    defineField({
+      name: 'publishedAt',
+      title: 'Published at',
+      type: 'datetime',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
@@ -21,59 +90,12 @@ export default defineType({
       },
       validation: (Rule) => Rule.required(),
     }),
-    defineField({
-      name: 'Image',
-      title: 'Image',
-      type: 'image',
-      options: {
-        hotspot: true,
-        metadata: ['blurhash', 'lqip', 'palette'],
-      },
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: 'gridItemSize',
-      title: 'Grid Item Size',
-      type: 'string',
-      initialValue: 'normal',
-      options: {
-        list: [
-          {title: 'Normal', value: 'normal'},
-          {title: 'Medium', value: 'medium'},
-          {title: 'Large', value: 'large'},
-        ],
-      },
-      description: 'Select the size of the grid item',
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: 'imageDescription',
-      title: 'Image Description',
-      type: 'string',
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: 'gallery',
-      type: 'array',
-      of: [{type: 'image'}],
-      options: {
-        layout: 'grid',
-      },
-      validation: (Rule) =>
-        Rule.max(9).warning('You can only add up to 10 images (including the main image).'),
-    }),
-    defineField({
-      name: 'publishedAt',
-      title: 'Published at',
-      type: 'datetime',
-      validation: (Rule) => Rule.required(),
-    }),
   ],
 
   preview: {
     select: {
       title: 'title',
-      media: 'Image',
+      media: 'gallery.0',
     },
     prepare(selection) {
       const {author} = selection
