@@ -48,6 +48,33 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'landingPageGallery',
+      title: 'Landing Page Gallery',
+      type: 'array',
+      of: [
+        {
+          type: 'image',
+          fields: [
+            {
+              name: 'alt',
+              title: 'Alternative text',
+              type: 'string',
+              description: 'Describe the image for accessibility and SEO.',
+              validation: (Rule) => Rule.required().error('Alt text is required'),
+            },
+          ],
+          options: {
+            hotspot: true,
+          },
+        },
+      ],
+      options: {
+        layout: 'grid',
+      },
+      validation: (Rule) =>
+        Rule.min(2).max(2).error('You must upload exactly 2 images in the landing page gallery.'),
+    }),
+    defineField({
       name: 'gallery',
       title: 'Gallery',
       type: 'array',
