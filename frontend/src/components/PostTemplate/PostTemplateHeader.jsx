@@ -67,11 +67,11 @@ const RightPanel = styled.ul`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-end;
-  gap: ${_var.spaceM};
+  gap: ${_var.spaceS};
   list-style: none;
 
   @media ${_var.device.laptop_max} {
-    gap: ${_var.spaceS};
+    gap: ${_var.spaceXS};
   }
 
   @media ${_var.device.tablet_max} {

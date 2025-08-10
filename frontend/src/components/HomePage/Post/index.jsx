@@ -25,30 +25,11 @@ const Container = styled(Link)`
   }
 `;
 
-// const Title = styled.h4`
-//   font-size: clamp(8px, 1.15vw, 24px);
-//   font-weight: 400;
-//   text-transform: uppercase;
-
-//   &::selection {
-//     color: white;
-//     background: black;
-//   }
-
-//   @media ${_var.device.laptop_max} {
-//     font-size: clamp(8px, 3.5vw, 24px);
-//   }
-
-//   @media ${_var.device.tablet_max} {
-//     font-size: clamp(8px, 3.25vw, 24px);
-//   }
-// `;
-
 const Post = ({ post }) => {
-  const { id, title, slug, gallery } = post;
+  const { id, slug, landingPageGallery } = post;
 
-  const mainImage = gallery[0];
-  const hoverImage = gallery[1];
+  const mainImage = landingPageGallery[0];
+  const hoverImage = landingPageGallery[1];
 
   const [containerRef, isVisible] = useElementOnScreen({
     root: null,
@@ -64,7 +45,6 @@ const Post = ({ post }) => {
       className={isVisible ? "active" : ""}
     >
       <Placeholder mainImage={mainImage} hoverImage={hoverImage} />
-      {/* <Title>{title}</Title> */}
     </Container>
   );
 };

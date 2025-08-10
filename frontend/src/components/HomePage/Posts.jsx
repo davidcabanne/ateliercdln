@@ -43,15 +43,6 @@ const Posts = ({ posts }) => {
         {posts.map((post) => (
           <Post key={post.id} post={post} />
         ))}
-        {posts.map((post) => (
-          <Post key={post.id} post={post} />
-        ))}
-        {posts.map((post) => (
-          <Post key={post.id} post={post} />
-        ))}
-        {posts.map((post) => (
-          <Post key={post.id} post={post} />
-        ))}
       </Grid>
     </Container>
   );

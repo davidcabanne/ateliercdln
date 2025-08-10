@@ -27,7 +27,7 @@ export async function getStaticProps() {
       postDescription,
       publishedAt,
       // Gallery: alt from the image field, everything else from the asset
-      gallery[]{
+      landingPageGallery[]{
         alt,
         crop,
         hotspot,
