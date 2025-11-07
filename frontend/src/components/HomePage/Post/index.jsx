@@ -6,6 +6,7 @@ import * as _var from "../../../styles/variables";
 import useElementOnScreen from "@/hooks/useElementOnScreen";
 
 import Placeholder from "./Placeholder";
+import Skeleton from "./Skeleton";
 
 const Container = styled(Link)`
   position: relative;
@@ -28,8 +29,7 @@ const Container = styled(Link)`
 const Post = ({ post }) => {
   const { id, slug, landingPageGallery } = post;
 
-  const mainImage = landingPageGallery[0];
-  const hoverImage = landingPageGallery[1];
+  const isPostValid = id && slug?.current && landingPageGallery.length > 0;
 
   const [containerRef, isVisible] = useElementOnScreen({
     root: null,
@@ -39,12 +39,19 @@ const Post = ({ post }) => {
 
   return (
     <Container
-      href={`/post/${encodeURIComponent(slug.current)}`}
+      href={isPostValid ? `/post/${encodeURIComponent(slug.current)}` : ""}
       ref={containerRef}
       key={id}
       className={isVisible ? "active" : ""}
     >
-      <Placeholder mainImage={mainImage} hoverImage={hoverImage} />
+      {isPostValid ? (
+        <Placeholder
+          mainImage={landingPageGallery?.[0] || null}
+          hoverImage={landingPageGallery?.[1] || null}
+        />
+      ) : (
+        <Skeleton>Empty</Skeleton>
+      )}
     </Container>
   );
 };

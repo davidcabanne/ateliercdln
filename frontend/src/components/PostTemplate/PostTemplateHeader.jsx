@@ -1,4 +1,4 @@
-import React, { useRef, useLayoutEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
 
 import * as _var from "../../styles/variables";
@@ -119,7 +119,7 @@ const PostTemplateHeader = ({ data }) => {
   const rightRef = useRef(null);
   const tagRefs = useRef([]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const right = rightRef.current;
     if (!right) return;
 
