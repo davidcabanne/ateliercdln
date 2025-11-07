@@ -1,4 +1,5 @@
 import groq from "groq";
+import { useRouter } from "next/router";
 import client from "@/lib/sanityClient";
 
 import PostTemplate from "@/components/PostTemplate";
@@ -6,6 +7,16 @@ import Email from "@/components/Email";
 import Footer from "@/components/Layout/Footer";
 
 const Slug = ({ post }) => {
+  const router = useRouter();
+
+  if (router.isFallback) {
+    return null;
+  }
+
+  if (!post) {
+    return null;
+  }
+
   return (
     <>
       <PostTemplate post={post} />
@@ -53,11 +64,16 @@ export async function getStaticProps(context) {
   try {
     const { slug = "" } = context.params;
     const post = await client.fetch(query, { slug });
+
+    if (!post) {
+      return { notFound: true };
+    }
+
     return {
       props: {
         post,
-        revalidate: 10,
       },
+      revalidate: 10,
     };
   } catch (error) {
     console.log(error);

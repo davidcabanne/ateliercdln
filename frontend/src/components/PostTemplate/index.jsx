@@ -128,20 +128,40 @@ const Description = styled.p`
 `;
 
 const handleRenderImages = (gallery, index) => {
+  if (!Array.isArray(gallery) || !gallery[index]) {
+    return null;
+  }
+
+  const image = gallery[index];
+  const blurDataURL =
+    image?.metadata?.blurHash ?? image?.metadata?.blurhash ?? undefined;
+
   return (
     <StyledImage
-      src={gallery[index].url}
-      alt={gallery[index].alt}
+      src={image.url}
+      alt={image.alt || ""}
       fill
       sizes="(min-width: 600px) 50vw, 100vw"
-      placeholder="blur"
-      blurDataURL={gallery[index].metadata.blurHash}
+      placeholder={blurDataURL ? "blur" : "empty"}
+      blurDataURL={blurDataURL}
     />
   );
 };
 
 const PostTemplate = ({ post }) => {
-  const { title, subtitle, city, tags, gallery, postDescription } = post;
+  if (!post) {
+    return null;
+  }
+
+  const {
+    title = "",
+    subtitle = "",
+    city = "",
+    tags = [],
+    gallery = [],
+    postDescription = "",
+  } = post ?? {};
+
   return (
     <Container>
       <PostTemplateHeader
