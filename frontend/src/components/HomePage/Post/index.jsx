@@ -45,10 +45,7 @@ const Post = ({ post }) => {
       className={isVisible ? "active" : ""}
     >
       {isPostValid ? (
-        <Placeholder
-          mainImage={landingPageGallery?.[0] || null}
-          hoverImage={landingPageGallery?.[1] || null}
-        />
+        <Placeholder mainImage={landingPageGallery?.[0] || null} />
       ) : (
         <Skeleton>Empty</Skeleton>
       )}

@@ -1,19 +1,26 @@
-import React, { useRef, useEffect } from "react";
-import styled, { keyframes } from "styled-components";
+import React from "react";
+import styled, { css } from "styled-components";
 
 import * as _var from "../../styles/variables";
-
-const translation = keyframes`
-  from { transform: translateX(0); }
-  to   { transform: translateX(var(--travel, 0px)); }
-`;
 
 const Container = styled.div`
   width: 100%;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  flex-direction: column;
   gap: ${_var.spaceS};
+  padding: 0px 120px;
+
+  @media ${_var.device.laptop_max} {
+    padding: 0px ${_var.spaceL};
+  }
+
+  @media ${_var.device.tablet_max} {
+    padding: 0px ${_var.spaceM};
+  }
+
+  @media ${_var.device.mobileL_max} {
+    padding: 0px ${_var.spaceS};
+  }
 
   & h1,
   h2,
@@ -27,149 +34,96 @@ const Container = styled.div`
   }
 `;
 
-const LeftPanel = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: ${_var.spaceM};
-
-  @media ${_var.device.laptop_max} {
-    gap: ${_var.spaceS};
-  }
-
-  @media ${_var.device.tablet_max} {
-    gap: ${_var.spaceS};
-  }
-`;
-
 const Title = styled.h1`
   font-weight: 700;
   font-style: Bold;
-  /* font-size: 80px; */
-  font-size: clamp(40px, 7vw, 80px);
+  font-size: clamp(40px, 7vw, 64px);
+  font-weight: 600;
+  font-style: Semi Bold;
+  line-height: 100%;
+  letter-spacing: 0%;
+  vertical-align: middle;
+
+  @media ${_var.device.tablet_max} {
+    font-size: clamp(32px, 7vw, 40px);
+  }
+  @media ${_var.device.mobileL_max} {
+    font-size: clamp(24px, 7vw, 32px);
+  }
 `;
 
 const SubTitle = styled.h2`
   font-weight: 400;
   font-style: Regular;
-  /* font-size: 40px; */
-  font-size: clamp(24px, 3.5vw, 40px);
-`;
-
-const City = styled.h3`
-  font-weight: 400;
-  font-style: Italic;
-  /* font-size: 24px; */
-  font-size: clamp(16px, 3.25vw, 24px);
-`;
-
-const RightPanel = styled.ul`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-end;
-  gap: ${_var.spaceS};
-  list-style: none;
-
-  @media ${_var.device.laptop_max} {
-    gap: ${_var.spaceXS};
-  }
+  font-size: clamp(16px, 3.5vw, 32px);
 
   @media ${_var.device.tablet_max} {
-    width: 100%;
-    gap: ${_var.spaceXS};
-    align-items: flex-start;
-    flex-wrap: wrap;
+    font-size: clamp(16px, 7vw, 24px);
   }
+  @media ${_var.device.mobileL_max} {
+    font-size: clamp(12px, 7vw, 16px);
+  }
+`;
 
-  & li:nth-child(1) {
-    animation-delay: 0ms;
-  }
-
-  & li:nth-child(2) {
-    animation-delay: -5000ms;
-  }
-
-  & li:nth-child(3) {
-    animation-delay: -10000ms;
-  }
+const Tags = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(2px, 3vw, 8px);
 `;
 
 const Tag = styled.li`
   width: max-content;
   font-weight: 400;
+  font-style: Italic;
   font-size: 24px;
-  padding: ${_var.spaceXS};
-  border: 1.5px solid ${_var.primary_000};
-  border-radius: ${_var.spaceXL};
+  font-size: clamp(12px, 3.5vw, 24px);
+
+  &::after {
+    content: ".";
+  }
+
+  ${(props) =>
+    props.$index &&
+    css`
+      &::after {
+        content: ",";
+      }
+    `}
 
   @media ${_var.device.tablet_max} {
-    width: auto;
-    display: inline-block;
-    white-space: nowrap;
-    font-size: clamp(16px, 3.25vw, 24px);
-    animation: ${translation} 10000ms infinite alternate linear;
-    will-change: transform;
+    font-size: clamp(8px, 3.5vw, 16px);
   }
+`;
+
+const Line = styled.span`
+  position: relative;
+  width: 100%;
+  height: 1px;
+  background: black;
+  margin: 32px 0px;
+
+  @media ${_var.device.tablet_max} {
+    margin: clamp(8px, 3.5vw, 16px) 0px;
+  }
+
   @media ${_var.device.mobileL_max} {
-    font-size: clamp(8px, 3.25vw, 16px);
+    margin: 4px 0px;
   }
 `;
 
 const PostTemplateHeader = ({ data }) => {
-  const rightRef = useRef(null);
-  const tagRefs = useRef([]);
-
-  useEffect(() => {
-    const right = rightRef.current;
-    if (!right) return;
-
-    const observers = [];
-
-    const updateOne = (el) => {
-      if (!el || !right) return;
-
-      const dx = Math.max(0, right.clientWidth - el.offsetWidth);
-
-      el.style.setProperty("--travel", `${dx}px`);
-    };
-
-    // Observe container + each tag so it adapts to resizes/content changes
-    const containerRO = new ResizeObserver(() => {
-      tagRefs.current.forEach(updateOne);
-    });
-    containerRO.observe(right);
-    observers.push(containerRO);
-
-    tagRefs.current.forEach((el) => {
-      if (!el) return;
-
-      // wait a tick so media queries/fonts apply before measuring
-      requestAnimationFrame(() => updateOne(el));
-
-      const ro = new ResizeObserver(() => updateOne(el));
-
-      ro.observe(el);
-
-      observers.push(ro);
-    });
-
-    return () => observers.forEach((ro) => ro.disconnect());
-  }, [data.tags]);
-
   return (
     <Container>
-      <LeftPanel>
-        <Title>{data.title}</Title>
-        <SubTitle>{data.subtitle}</SubTitle>
-        <City>{data.city}</City>
-      </LeftPanel>
-      <RightPanel ref={rightRef}>
+      <Title>{data.title}</Title>
+      <SubTitle>{data.subtitle}</SubTitle>
+      <Line />
+      <Tags>
         {data.tags.map((tag, index) => (
-          <Tag key={tag + index} ref={(el) => (tagRefs.current[index] = el)}>
+          <Tag key={tag + index} $index={index < data.tags.length - 1}>
             {tag}
           </Tag>
         ))}
-      </RightPanel>
+      </Tags>
     </Container>
   );
 };

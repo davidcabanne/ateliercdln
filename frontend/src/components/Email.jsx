@@ -10,11 +10,19 @@ const Container = styled.section`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding: 200px ${_var.spaceM};
+  padding: 160px 120px;
   overflow: hidden;
 
+  @media ${_var.device.laptop_max} {
+    padding: 120px ${_var.spaceL};
+  }
+
   @media ${_var.device.tablet_max} {
-    display: none;
+    padding: 80px ${_var.spaceM};
+  }
+
+  @media ${_var.device.mobileL_max} {
+    padding: 32px ${_var.spaceS};
   }
 `;
 

@@ -1,30 +1,37 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import Image from "next/image";
 
 import * as _var from "../../styles/variables";
 
 import PostTemplateHeader from "./PostTemplateHeader";
 
-const Container = styled.div`
-  position: relative;
-  width: 100%;
-
-  padding: 0px ${_var.spaceM};
-  margin-top: ${_var.spaceXL};
+const PADDING = css`
+  padding: 0 120px;
 
   @media ${_var.device.laptop_max} {
-    padding: 0px ${_var.spaceM};
-    margin-top: ${_var.spaceL};
+    padding: 0 ${_var.spaceL};
   }
 
   @media ${_var.device.tablet_max} {
-    margin-bottom: ${_var.spaceL};
+    padding: 0 ${_var.spaceM};
   }
 
   @media ${_var.device.mobileL_max} {
-    padding: 0px ${_var.spaceS};
+    padding: 0 ${_var.spaceS};
+  }
+`;
+
+const Container = styled.div`
+  position: relative;
+  width: 100%;
+  margin-top: ${_var.spaceXL};
+
+  @media ${_var.device.laptop_max} {
+    margin-top: ${_var.spaceL};
+  }
+
+  @media ${_var.device.mobileL_max} {
     margin-top: ${_var.spaceM};
-    margin-bottom: ${_var.spaceM};
   }
 `;
 
@@ -34,7 +41,7 @@ const Grid = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   gap: ${_var.spaceS};
-  margin-top: ${_var.spaceXL};
+  margin-top: ${_var.spaceML};
 
   @media ${_var.device.laptop_max} {
     margin-top: ${_var.spaceL};
@@ -57,20 +64,32 @@ const Row = styled.div`
   grid-template-columns: ${(props) =>
     props.$gridTemplateColumns ? props.$gridTemplateColumns : "1fr"};
   gap: ${_var.spaceS};
+  ${PADDING}
 
   @media ${_var.device.tablet_max} {
     grid-template-columns: 1fr;
   }
 `;
 
-const PlaceholderFull = styled.div`
+const PlaceholderRegular = styled.div`
   position: relative;
+  width: calc(100% - (120px * 2));
+  justify-self: center;
   overflow: hidden;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 21 / 10;
   cursor: none;
+
+  @media ${_var.device.laptop_max} {
+    width: calc(100% - (${_var.spaceL} * 2));
+  }
 
   @media ${_var.device.tablet_max} {
     cursor: pointer !important;
+    width: calc(100% - (${_var.spaceM} * 2));
+  }
+
+  @media ${_var.device.mobileL_max} {
+    width: calc(100% - (${_var.spaceS} * 2));
   }
 `;
 
@@ -85,10 +104,10 @@ const PlaceholderHalf = styled.div`
   }
 `;
 
-const PlaceholderThird = styled.div`
+const PlaceholderFull = styled.div`
   position: relative;
   overflow: hidden;
-  aspect-ratio: 10 / 15;
+  aspect-ratio: 21 / 10;
   cursor: none;
 
   @media ${_var.device.tablet_max} {
@@ -108,22 +127,26 @@ const StyledImage = styled(Image)`
 
 const Description = styled.p`
   font-weight: 400;
-  /* font-size: 40px; */
-  font-size: clamp(24px, 3.5vw, 40px);
-  padding: ${_var.spaceL};
+  font-style: Regular;
+  font-size: 24px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  vertical-align: middle;
+  font-size: clamp(16px, 3.5vw, 24px);
+  padding: ${_var.spaceL} calc(120px + ${_var.spaceL});
 
   @media ${_var.device.laptop_max} {
-    padding: ${_var.spaceL};
+    padding: ${_var.spaceM} calc(${_var.spaceL} + ${_var.spaceM});
   }
 
   @media ${_var.device.tablet_max} {
-    font-size: clamp(16px, 3.5vw, 32px);
+    font-size: clamp(8px, 3.5vw, 16px);
     line-height: 100%;
-    padding: ${_var.spaceM};
+    padding: ${_var.spaceM} calc(${_var.spaceM} + ${_var.spaceM});
   }
 
   @media ${_var.device.mobileL_max} {
-    padding: ${_var.spaceS};
+    padding: 0px ${_var.spaceS};
   }
 `;
 
@@ -173,19 +196,32 @@ const PostTemplate = ({ post }) => {
         }}
       />
       <Grid>
-        <PlaceholderFull>{handleRenderImages(gallery, 0)}</PlaceholderFull>
+        {/* IMAGE 1: REGULAR */}
+        <PlaceholderRegular>
+          {handleRenderImages(gallery, 0)}
+        </PlaceholderRegular>
+
+        {/* POST DESCRIPTION */}
         <Description>{postDescription}</Description>
+
+        {/* IMAGE 2 & 3: ROWS */}
         <Row $gridTemplateColumns="1fr 1fr">
           <PlaceholderHalf>{handleRenderImages(gallery, 1)}</PlaceholderHalf>
           <PlaceholderHalf>{handleRenderImages(gallery, 2)}</PlaceholderHalf>
         </Row>
-        <PlaceholderFull>{handleRenderImages(gallery, 3)}</PlaceholderFull>
-        <Row $gridTemplateColumns="1fr 1fr 1fr">
-          <PlaceholderThird>{handleRenderImages(gallery, 4)}</PlaceholderThird>
-          <PlaceholderThird>{handleRenderImages(gallery, 5)}</PlaceholderThird>
-          <PlaceholderThird>{handleRenderImages(gallery, 6)}</PlaceholderThird>
-        </Row>
-        <PlaceholderFull>{handleRenderImages(gallery, 7)}</PlaceholderFull>
+
+        {/* IMAGE 4: REGULAR */}
+        <PlaceholderRegular>
+          {handleRenderImages(gallery, 4)}
+        </PlaceholderRegular>
+
+        {/* IMAGE 5: FULL */}
+        <PlaceholderFull>{handleRenderImages(gallery, 5)}</PlaceholderFull>
+
+        {/* IMAGE 6: REGULAR */}
+        <PlaceholderRegular>
+          {handleRenderImages(gallery, 6)}
+        </PlaceholderRegular>
       </Grid>
     </Container>
   );

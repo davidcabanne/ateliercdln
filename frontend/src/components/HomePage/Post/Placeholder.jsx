@@ -10,7 +10,7 @@ const animationTiming = 500;
 const Container = styled.div`
   position: relative;
   overflow: hidden;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 21 / 10;
   cursor: none;
 
   @media ${_var.device.tablet_max} {
@@ -18,10 +18,6 @@ const Container = styled.div`
   }
 
   &:hover :first-child {
-    opacity: 0;
-  }
-
-  &:hover :nth-child(2) {
     transform: scale(1.03);
   }
 `;
@@ -39,7 +35,7 @@ const StyledImage = styled(Image)`
   will-change: transform, opacity;
 `;
 
-const Placeholder = ({ mainImage, hoverImage }) => {
+const Placeholder = ({ mainImage }) => {
   const { cursorChangeHandler } = useContext(MouseContext);
 
   const handleMouseLeave = () => {
@@ -63,16 +59,6 @@ const Placeholder = ({ mainImage, hoverImage }) => {
         sizes="(min-width: 600px) 50vw, 100vw"
         placeholder="blur"
         blurDataURL={mainImage.metadata.blurHash}
-        style={{ zIndex: 1 }}
-      />
-      <StyledImage
-        src={hoverImage.url}
-        alt={hoverImage.alt}
-        fill
-        sizes="(min-width: 600px) 50vw, 100vw"
-        placeholder="blur"
-        blurDataURL={hoverImage.metadata.blurHash}
-        style={{ zIndex: 0 }}
       />
     </Container>
   );
