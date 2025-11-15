@@ -10,7 +10,7 @@ const Container = styled.section`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding: 160px 120px;
+  padding: 120px 120px;
   overflow: hidden;
 
   @media ${_var.device.laptop_max} {

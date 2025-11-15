@@ -40,15 +40,19 @@ const Grid = styled.div`
   width: 100%;
   display: grid;
   grid-template-columns: 1fr;
-  gap: ${_var.spaceS};
+  gap: 120px;
   margin-top: ${_var.spaceML};
 
   @media ${_var.device.laptop_max} {
-    margin-top: ${_var.spaceL};
+    gap: ${_var.spaceL};
   }
 
   @media ${_var.device.tablet_max} {
-    margin-top: ${_var.spaceM};
+    gap: ${_var.spaceM};
+  }
+
+  @media ${_var.device.mobileL_max} {
+    gap: ${_var.spaceS};
   }
 
   & :nth-child(1) div {
@@ -133,16 +137,15 @@ const Description = styled.p`
   letter-spacing: 0%;
   vertical-align: middle;
   font-size: clamp(16px, 3.5vw, 24px);
-  padding: ${_var.spaceL} calc(120px + ${_var.spaceL});
+  padding: 0px calc(120px * 2);
 
   @media ${_var.device.laptop_max} {
-    padding: ${_var.spaceM} calc(${_var.spaceL} + ${_var.spaceM});
+    padding: 0px calc(${_var.spaceL} * 2);
   }
 
   @media ${_var.device.tablet_max} {
     font-size: clamp(8px, 3.5vw, 16px);
-    line-height: 100%;
-    padding: ${_var.spaceM} calc(${_var.spaceM} + ${_var.spaceM});
+    padding: 0px ${_var.spaceM};
   }
 
   @media ${_var.device.mobileL_max} {

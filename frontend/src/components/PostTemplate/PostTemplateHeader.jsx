@@ -37,7 +37,7 @@ const Container = styled.div`
 const Title = styled.h1`
   font-weight: 700;
   font-style: Bold;
-  font-size: clamp(40px, 7vw, 64px);
+  font-size: clamp(40px, 7vw, 56px);
   font-weight: 600;
   font-style: Semi Bold;
   line-height: 100%;
@@ -55,7 +55,7 @@ const Title = styled.h1`
 const SubTitle = styled.h2`
   font-weight: 400;
   font-style: Regular;
-  font-size: clamp(16px, 3.5vw, 32px);
+  font-size: clamp(16px, 3.5vw, 24px);
 
   @media ${_var.device.tablet_max} {
     font-size: clamp(16px, 7vw, 24px);
@@ -76,7 +76,7 @@ const Tag = styled.li`
   font-weight: 400;
   font-style: Italic;
   font-size: 24px;
-  font-size: clamp(12px, 3.5vw, 24px);
+  font-size: clamp(12px, 3.5vw, 20px);
 
   &::after {
     content: ".";
@@ -91,7 +91,7 @@ const Tag = styled.li`
     `}
 
   @media ${_var.device.tablet_max} {
-    font-size: clamp(8px, 3.5vw, 16px);
+    font-size: clamp(8px, 3.5vw, 12px);
   }
 `;
 

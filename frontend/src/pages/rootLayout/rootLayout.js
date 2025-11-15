@@ -5,7 +5,6 @@ import { Hanken_Grotesk } from "next/font/google";
 const hankenGrotesk = Hanken_Grotesk({ subsets: ["latin"] });
 
 import Header from "@/components/Layout/Header";
-import RandomShape from "@/components/RandomShape";
 
 const Page = styled.div`
   position: relative;
@@ -27,12 +26,7 @@ export default function RootLayout({ children }) {
   return (
     <main className={hankenGrotesk.className}>
       <Header />
-      <Page>
-        {children}
-        <RandomShape />
-        <RandomShape />
-        <RandomShape />
-      </Page>
+      <Page>{children}</Page>
     </main>
   );
 }

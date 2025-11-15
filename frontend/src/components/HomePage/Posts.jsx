@@ -27,10 +27,14 @@ const Grid = styled.section`
   width: 100%;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 160px;
+  gap: 120px;
+
+  @media ${_var.device.laptop_max} {
+    gap: ${_var.spaceL};
+  }
 
   @media ${_var.device.tablet_max} {
-    gap: ${_var.spaceL};
+    gap: ${_var.spaceM};
   }
 
   @media ${_var.device.mobileL_max} {

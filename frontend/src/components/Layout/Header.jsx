@@ -10,8 +10,8 @@ const Container = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   z-index: 100;
 
