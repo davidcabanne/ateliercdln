@@ -1,9 +1,9 @@
 import styled, { css } from "styled-components";
 import Image from "next/image";
 
-import * as _var from "../../styles/variables";
+import * as _var from "../../../styles/variables";
 
-import PostTemplateHeader from "./PostTemplateHeader";
+import Header from "./ProjectHeader";
 
 const PADDING = css`
   padding: 0 120px;
@@ -190,7 +190,7 @@ const PostTemplate = ({ post }) => {
 
   return (
     <Container>
-      <PostTemplateHeader
+      <Header
         data={{
           title: title,
           subtitle: subtitle,

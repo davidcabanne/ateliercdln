@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 
-import * as _var from "../../styles/variables";
+import * as _var from "../../../styles/variables";
 
 const Container = styled.div`
   width: 100%;

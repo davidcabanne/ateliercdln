@@ -2,8 +2,8 @@ import groq from "groq";
 import { useRouter } from "next/router";
 import client from "@/lib/sanityClient";
 
-import Post from "@/components/pages/Home/Post";
-import Email from "@/components/Email";
+import Project from "@/components/pages/Project";
+import EmailDesktop from "@/components/email/EmailDesktop";
 import Footer from "@/components/Layout/Footer";
 
 const Slug = ({ post }) => {
@@ -19,8 +19,8 @@ const Slug = ({ post }) => {
 
   return (
     <>
-      <Post post={post} />
-      <Email />
+      <Project post={post} />
+      <EmailDesktop />
       <Footer />
     </>
   );
