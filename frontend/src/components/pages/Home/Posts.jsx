@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import * as _var from "../../styles/variables";
+import * as _var from "../../../styles/variables";
 
-import Post from "@/components/HomePage/Post";
+import Post from "@/components/pages/Home/Post";
 
 const Container = styled.div`
   position: relative;

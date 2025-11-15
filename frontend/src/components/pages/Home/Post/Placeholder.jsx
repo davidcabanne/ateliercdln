@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import Image from "next/image";
 import styled from "styled-components";
-import * as _var from "../../../styles/variables";
+import * as _var from "../../../../styles/variables";
 
 import { MouseContext } from "@/context/mouseContext";
 

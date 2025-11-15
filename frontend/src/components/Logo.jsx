@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import * as _var from "../styles/variables";
 
-import ShapeIcon from "./Icons/ShapeIcon";
+import ShapeIcon from "./ShapeIcon";
 
 const Container = styled.div`
   display: flex;

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import * as _var from "../../styles/variables";
+import * as _var from "../styles/variables";
 
 const Svg = styled.svg`
   @media ${_var.device.tablet_max} {

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import styled from "styled-components";
 import * as _var from "../../styles/variables";
 
@@ -57,7 +58,7 @@ const Svg = styled.svg`
 const Header = () => {
   return (
     <Container id="#top">
-      <a href="/">
+      <Link href="/">
         <Logo>
           {/* CIRCLE */}
           <Svg
@@ -92,7 +93,7 @@ const Header = () => {
             <polygon points="90,90 0,90 45,0 " />
           </Svg>
         </Logo>
-      </a>
+      </Link>
     </Container>
   );
 };

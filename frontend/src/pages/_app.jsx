@@ -5,7 +5,7 @@ import * as _var from "../styles/variables";
 
 import MouseContextProvider from "../context/mouseContext";
 
-import Cursor from "../components/Cursor/index";
+import Cursor from "@/components/Cursor";
 
 const GlobalStyle = createGlobalStyle`
 *,

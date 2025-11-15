@@ -1,8 +1,9 @@
-import React, { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
 import styled, { css } from "styled-components";
-import * as _var from "../../styles/variables";
-import useMousePosition from "../../hooks/useMousePosition";
-import { MouseContext } from "../../context/mouseContext";
+import * as _var from "../styles/variables";
+
+import useMousePosition from "../hooks/useMousePosition";
+import { MouseContext } from "../context/mouseContext";
 
 const animationDuration = "150ms";
 
@@ -71,7 +72,7 @@ const Polygon = styled.polygon`
 
 const Cursor = () => {
   const [cursorActive, setCursorActive] = useState(false);
-  const { cursorType, cursorChangeHandler } = useContext(MouseContext);
+  const { cursorType } = useContext(MouseContext);
   const { x, y } = useMousePosition();
 
   useEffect(() => {
@@ -100,7 +101,6 @@ const Cursor = () => {
           top: `${y}px`,
         }}
         className={cursorType === "hovered" ? "active" : ""}
-        $cursorActive={cursorActive}
         $triangle
       >
         <polygon points="90,90 0,90 45,0 " />
@@ -116,7 +116,6 @@ const Cursor = () => {
           left: `${x}px`,
           top: `${y}px`,
         }}
-        $cursorActive={cursorActive}
       >
         <g>
           <Polygon

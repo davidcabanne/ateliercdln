@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import * as _var from "../../../styles/variables";
+import * as _var from "../../../../styles/variables";
 
 const Container = styled.div`
   position: relative;

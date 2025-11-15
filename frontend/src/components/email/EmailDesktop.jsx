@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import styled, { keyframes } from "styled-components";
-import * as _var from "../styles/variables";
+import * as _var from "../../styles/variables";
 
 import { MouseContext } from "@/context/mouseContext";
 
@@ -68,7 +68,7 @@ const Svg = styled.svg`
   max-width: 1450px;
 `;
 
-const Email = () => {
+const EmailDesktop = () => {
   const { cursorChangeHandler } = useContext(MouseContext);
 
   return (
@@ -173,4 +173,4 @@ const Email = () => {
   );
 };
 
-export default Email;
+export default EmailDesktop;

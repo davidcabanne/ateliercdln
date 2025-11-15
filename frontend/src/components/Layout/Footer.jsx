@@ -223,16 +223,16 @@ const Footer = () => {
             </Link>
             <p>
               Le design au service des porteurs de projets et des entrepreneurs
-              souhaitant développer des images de marque uniques et fortes pour
+              souhaitant développer des images de marque uniques et fortes pour
               que leurs idées novatrices et porteuses de sens soient adoptées
-              par le plus grand nombre.
+              par le plus grand nombre.
             </p>
             <CallToAction
               href="mailto: theo.chapdelaine@gmail.com"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Let's work
+              Let&apos;s work
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 19 19"
