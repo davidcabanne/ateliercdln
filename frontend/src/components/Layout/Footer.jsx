@@ -2,6 +2,8 @@ import Link from "next/link";
 import styled from "styled-components";
 import * as _var from "../../styles/variables";
 
+import useCursorHoverHandlers from "@/hooks/useCursorHoverHandlers";
+
 import Logo from "../Logo";
 
 const userSelectStyles = `
@@ -21,6 +23,14 @@ const Container = styled.footer`
   color: white;
   background: black;
   z-index: 60;
+
+  & a {
+    cursor: none;
+
+    @media ${_var.device.tablet_max} {
+      cursor: pointer;
+    }
+  }
 
   @media ${_var.device.laptop_max} {
     padding: ${_var.spaceL} ${_var.spaceL};
@@ -213,12 +223,14 @@ const CallToAction = styled.a`
 `;
 
 const Footer = () => {
+  const cursorHandlers = useCursorHoverHandlers();
+
   return (
     <Container>
       <Wrapper>
         <TopSection>
           <LeftPanel>
-            <Link href="#top">
+            <Link href="#top" {...cursorHandlers}>
               <Logo fill="white" />
             </Link>
             <p>
@@ -231,6 +243,7 @@ const Footer = () => {
               href="mailto: theo.chapdelaine@gmail.com"
               target="_blank"
               rel="noopener noreferrer"
+              {...cursorHandlers}
             >
               Let&apos;s work
               <svg
@@ -259,6 +272,7 @@ const Footer = () => {
                 href="https://fr.linkedin.com/in/tchapdelaine"
                 target="_blank"
                 rel="noopener noreferrer"
+                {...cursorHandlers}
               >
                 Linkedin
               </a>
@@ -266,6 +280,7 @@ const Footer = () => {
                 href="https://www.instagram.com/ateliercdln/"
                 target="_blank"
                 rel="noopener noreferrer"
+                {...cursorHandlers}
               >
                 Instagram
               </a>

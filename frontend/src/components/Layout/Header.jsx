@@ -2,6 +2,8 @@ import Link from "next/link";
 import styled from "styled-components";
 import * as _var from "../../styles/variables";
 
+import useCursorHoverHandlers from "@/hooks/useCursorHoverHandlers";
+
 const Container = styled.header`
   position: fixed;
   top: 0;
@@ -17,7 +19,11 @@ const Container = styled.header`
   z-index: 100;
 
   & a {
-    cursor: pointer;
+    cursor: none;
+
+    @media ${_var.device.tablet_max} {
+      cursor: pointer;
+    }
   }
 
   @media ${_var.device.tablet_max} {
@@ -56,9 +62,11 @@ const Svg = styled.svg`
 `;
 
 const Header = () => {
+  const cursorHandlers = useCursorHoverHandlers();
+
   return (
     <Container id="#top">
-      <Link href="/">
+      <Link href="/" {...cursorHandlers}>
         <Logo>
           {/* CIRCLE */}
           <Svg
