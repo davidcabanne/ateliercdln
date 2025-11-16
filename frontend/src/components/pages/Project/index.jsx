@@ -214,15 +214,15 @@ const PostTemplate = ({ post }) => {
 
         {/* IMAGE 4: REGULAR */}
         <PlaceholderRegular>
-          {handleRenderImages(gallery, 4)}
+          {handleRenderImages(gallery, 3)}
         </PlaceholderRegular>
 
         {/* IMAGE 5: FULL */}
-        <PlaceholderFull>{handleRenderImages(gallery, 5)}</PlaceholderFull>
+        <PlaceholderFull>{handleRenderImages(gallery, 4)}</PlaceholderFull>
 
         {/* IMAGE 6: REGULAR */}
         <PlaceholderRegular>
-          {handleRenderImages(gallery, 6)}
+          {handleRenderImages(gallery, 5)}
         </PlaceholderRegular>
       </Grid>
     </Container>

@@ -43,7 +43,6 @@ const Grid = styled.section`
 `;
 
 const Posts = ({ posts }) => {
-  console.log(posts)
   return (
     <Container>
       <Grid>

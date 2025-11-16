@@ -72,7 +72,7 @@ export default defineType({
         layout: 'grid',
       },
       validation: (Rule) =>
-        Rule.min(2).max(2).error('You must upload exactly 2 images in the landing page gallery.'),
+        Rule.min(1).max(1).error('You must upload exactly 1 image in the landing page gallery.'),
     }),
     defineField({
       name: 'gallery',
@@ -99,7 +99,7 @@ export default defineType({
         layout: 'grid',
       },
       validation: (Rule) =>
-        Rule.min(8).max(8).error('You must upload exactly 8 images in the gallery.'),
+        Rule.min(6).max(6).error('You must upload exactly 6 images in the gallery.'),
     }),
     defineField({
       name: 'video',
