@@ -28,7 +28,6 @@ const Container = styled.div`
   p,
   li {
     line-height: 100%;
-    text-transform: uppercase;
     vertical-align: middle;
     letter-spacing: 0%;
   }
@@ -77,6 +76,7 @@ const Tag = styled.li`
   font-style: Italic;
   font-size: 24px;
   font-size: clamp(12px, 3.5vw, 20px);
+  text-transform: capitalize;
 
   &::after {
     content: ".";
@@ -100,6 +100,7 @@ const Line = styled.span`
   width: 100%;
   height: 1px;
   background: black;
+  opacity: 0.12;
   margin: 32px 0px;
 
   @media ${_var.device.tablet_max} {
@@ -120,7 +121,7 @@ const PostTemplateHeader = ({ data }) => {
       <Tags>
         {data.tags.map((tag, index) => (
           <Tag key={tag + index} $index={index < data.tags.length - 1}>
-            {tag}
+            {tag.toLowerCase()}
           </Tag>
         ))}
       </Tags>

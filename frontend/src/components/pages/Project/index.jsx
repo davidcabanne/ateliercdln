@@ -1,6 +1,5 @@
 import styled, { css } from "styled-components";
 import Image from "next/image";
-
 import * as _var from "../../../styles/variables";
 
 import Header from "./ProjectHeader";

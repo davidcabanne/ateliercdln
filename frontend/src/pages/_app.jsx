@@ -78,7 +78,6 @@ a:visited {
 h1 {
   font-size: 128px;
   font-weight: 400;
-  text-transform: uppercase;
 }
 
 h1, h2 {
