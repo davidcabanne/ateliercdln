@@ -4,6 +4,10 @@ import * as _var from "../../../styles/variables";
 
 import Header from "./ProjectHeader";
 
+/**
+ * Shared horizontal padding used for rows/content to keep
+ * everything aligned with the header on different breakpoints.
+ */
 const PADDING = css`
   padding: 0 120px;
 
@@ -20,6 +24,10 @@ const PADDING = css`
   }
 `;
 
+/* ───────────────────────── Layout containers ───────────────────────── */
+
+// Outer container for a single project post page.
+// Handles top spacing relative to the header and global layout.
 const Container = styled.div`
   position: relative;
   width: 100%;
@@ -34,6 +42,16 @@ const Container = styled.div`
   }
 `;
 
+/**
+ * Vertical grid that holds:
+ *  - main image
+ *  - description
+ *  - image row
+ *  - additional images
+ *
+ * Items are stacked vertically with a large gap that scales
+ * down on smaller breakpoints.
+ */
 const Grid = styled.div`
   position: relative;
   width: 100%;
@@ -53,12 +71,12 @@ const Grid = styled.div`
   @media ${_var.device.mobileL_max} {
     gap: ${_var.spaceS};
   }
-
-  & :nth-child(1) div {
-    transform: translateX(32px);
-  }
 `;
 
+/**
+ * Row used for the 2-column image section.
+ * On tablet and below, it collapses to a single column.
+ */
 const Row = styled.div`
   position: relative;
   width: 100%;
@@ -74,6 +92,13 @@ const Row = styled.div`
   }
 `;
 
+/* ───────────────────────── Image wrappers ───────────────────────── */
+
+/**
+ * Wrapper for "regular" horizontal images.
+ * Uses a fixed aspect ratio (21:10) and a reduced inner width
+ * to align with the page padding.
+ */
 const PlaceholderRegular = styled.div`
   position: relative;
   width: calc(100% - (120px * 2));
@@ -96,6 +121,10 @@ const PlaceholderRegular = styled.div`
   }
 `;
 
+/**
+ * Wrapper for square images (1:1 aspect ratio),
+ * typically used in the 2-column row.
+ */
 const PlaceholderHalf = styled.div`
   position: relative;
   overflow: hidden;
@@ -107,6 +136,10 @@ const PlaceholderHalf = styled.div`
   }
 `;
 
+/**
+ * Wrapper for full-width horizontal images
+ * that span the available container width.
+ */
 const PlaceholderFull = styled.div`
   position: relative;
   overflow: hidden;
@@ -118,6 +151,10 @@ const PlaceholderFull = styled.div`
   }
 `;
 
+/**
+ * Base Next.js Image used inside all placeholders.
+ * Positioned absolutely to fill the wrapper and cover it.
+ */
 const StyledImage = styled(Image)`
   position: absolute;
   inset: 0;
@@ -128,14 +165,18 @@ const StyledImage = styled(Image)`
   -webkit-user-select: none;
 `;
 
+/**
+ * Long-form text description of the project.
+ * Uses responsive font sizing and horizontal padding
+ * aligned with the main layout.
+ */
 const Description = styled.p`
   font-weight: 400;
   font-style: Regular;
-  font-size: 24px;
+  font-size: clamp(16px, 3.5vw, 24px);
   line-height: 100%;
   letter-spacing: 0%;
   vertical-align: middle;
-  font-size: clamp(16px, 3.5vw, 24px);
   padding: 0px calc(120px * 2);
 
   @media ${_var.device.laptop_max} {
@@ -152,31 +193,68 @@ const Description = styled.p`
   }
 `;
 
-const handleRenderImages = (gallery, index) => {
-  if (!Array.isArray(gallery) || !gallery[index]) {
-    return null;
-  }
+/* ───────────────────────── Image helper component ───────────────────────── */
 
-  const image = gallery[index];
-  const blurDataURL =
-    image?.metadata?.blurHash ?? image?.metadata?.blurhash ?? undefined;
+/**
+ * Renders a single image from the gallery inside a given wrapper component,
+ * with support for Sanity's low-quality image placeholder (LQIP).
+ *
+ * @param {Object}   props
+ * @param {Array}    props.gallery - Array of image objects coming from Sanity.
+ * @param {number}   props.index   - Index of the image to render from the gallery.
+ * @param {React.FC} props.Wrapper - Styled wrapper component controlling layout/aspect.
+ *
+ * If the image at the requested index does not exist, nothing is rendered.
+ */
+const PostImage = ({ gallery, index, Wrapper }) => {
+  const image = gallery?.[index];
+  if (!image) return null;
+
+  const blurDataURL = image?.metadata?.lqip;
 
   return (
-    <StyledImage
-      src={image.url}
-      alt={image.alt || ""}
-      fill
-      sizes="(min-width: 600px) 50vw, 100vw"
-      placeholder={blurDataURL ? "blur" : "empty"}
-      blurDataURL={blurDataURL}
-    />
+    <Wrapper>
+      <StyledImage
+        src={image.url}
+        alt={image.alt || ""}
+        fill
+        sizes="(min-width: 600px) 50vw, 100vw"
+        placeholder={blurDataURL ? "blur" : "empty"}
+        blurDataURL={blurDataURL}
+      />
+    </Wrapper>
   );
 };
 
-const PostTemplate = ({ post }) => {
-  if (!post) {
-    return null;
-  }
+/**
+ * ProjectPost
+ *
+ * Responsible for rendering a full project page:
+ *  - header (title, subtitle, city, tags)
+ *  - a sequence of images with specific layout rules
+ *  - the project textual description
+ *
+ * The image layout is currently:
+ *  1. Main "regular" image
+ *  2. Description text
+ *  3. Row of two square images
+ *  4. Regular image
+ *  5. Full-width image
+ *  6. Regular image
+ *
+ * @param {Object} props
+ * @param {Object} props.post
+ * @param {string} [props.post.title]
+ * @param {string} [props.post.subtitle]
+ * @param {string} [props.post.city]
+ * @param {Array}  [props.post.tags]
+ * @param {Array}  [props.post.gallery] - Image objects with `url`, `alt`, and `metadata.lqip`.
+ * @param {string} [props.post.postDescription]
+ *
+ * @returns {JSX.Element | null} Renders the project view or null if post is missing.
+ */
+const ProjectPost = ({ post }) => {
+  if (!post) return null;
 
   const {
     title = "",
@@ -185,48 +263,36 @@ const PostTemplate = ({ post }) => {
     tags = [],
     gallery = [],
     postDescription = "",
-  } = post ?? {};
+  } = post || {};
 
   return (
     <Container>
-      <Header
-        data={{
-          title: title,
-          subtitle: subtitle,
-          city: city,
-          tags: tags,
-        }}
-      />
+      <Header data={{ title, subtitle, city, tags }} />
+
       <Grid>
         {/* IMAGE 1: REGULAR */}
-        <PlaceholderRegular>
-          {handleRenderImages(gallery, 0)}
-        </PlaceholderRegular>
+        <PostImage gallery={gallery} index={0} Wrapper={PlaceholderRegular} />
 
         {/* POST DESCRIPTION */}
         <Description>{postDescription}</Description>
 
         {/* IMAGE 2 & 3: ROWS */}
         <Row $gridTemplateColumns="1fr 1fr">
-          <PlaceholderHalf>{handleRenderImages(gallery, 1)}</PlaceholderHalf>
-          <PlaceholderHalf>{handleRenderImages(gallery, 2)}</PlaceholderHalf>
+          <PostImage gallery={gallery} index={1} Wrapper={PlaceholderHalf} />
+          <PostImage gallery={gallery} index={2} Wrapper={PlaceholderHalf} />
         </Row>
 
         {/* IMAGE 4: REGULAR */}
-        <PlaceholderRegular>
-          {handleRenderImages(gallery, 3)}
-        </PlaceholderRegular>
+        <PostImage gallery={gallery} index={3} Wrapper={PlaceholderRegular} />
 
         {/* IMAGE 5: FULL */}
-        <PlaceholderFull>{handleRenderImages(gallery, 4)}</PlaceholderFull>
+        <PostImage gallery={gallery} index={4} Wrapper={PlaceholderFull} />
 
         {/* IMAGE 6: REGULAR */}
-        <PlaceholderRegular>
-          {handleRenderImages(gallery, 5)}
-        </PlaceholderRegular>
+        <PostImage gallery={gallery} index={5} Wrapper={PlaceholderRegular} />
       </Grid>
     </Container>
   );
 };
 
-export default PostTemplate;
+export default ProjectPost;

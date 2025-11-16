@@ -3,6 +3,13 @@ import styled, { css } from "styled-components";
 
 import * as _var from "../../../styles/variables";
 
+/**
+ * Container for the project post header section.
+ *
+ * - Handles horizontal padding across breakpoints
+ * - Stacks title, subtitle, divider line and tags vertically
+ * - Normalizes typographic settings for basic text elements inside
+ */
 const Container = styled.div`
   width: 100%;
   display: flex;
@@ -22,26 +29,28 @@ const Container = styled.div`
     padding: 0px ${_var.spaceS};
   }
 
+  /* Apply consistent text styling only to elements inside this container */
   & h1,
-  h2,
-  h3,
-  p,
-  li {
+  & h2,
+  & h3,
+  & p,
+  & li {
     line-height: 100%;
     vertical-align: middle;
     letter-spacing: 0%;
   }
 `;
 
+/**
+ * Main post title.
+ *
+ * - Uses a responsive clamp for font size
+ * - Slightly lighter weight than a full bold for a more refined look
+ */
 const Title = styled.h1`
-  font-weight: 700;
-  font-style: Bold;
-  font-size: clamp(40px, 7vw, 56px);
   font-weight: 600;
   font-style: Semi Bold;
-  line-height: 100%;
-  letter-spacing: 0%;
-  vertical-align: middle;
+  font-size: clamp(40px, 7vw, 56px);
 
   @media ${_var.device.tablet_max} {
     font-size: clamp(32px, 7vw, 40px);
@@ -51,6 +60,9 @@ const Title = styled.h1`
   }
 `;
 
+/**
+ * Subtitle / secondary line below the main title.
+ */
 const SubTitle = styled.h2`
   font-weight: 400;
   font-style: Regular;
@@ -64,12 +76,22 @@ const SubTitle = styled.h2`
   }
 `;
 
+/**
+ * Container for the tag list.
+ * - Flex row with wrapping and small responsive gaps.
+ */
 const Tags = styled.ul`
   display: flex;
   flex-wrap: wrap;
   gap: clamp(2px, 3vw, 8px);
 `;
 
+/**
+ * Single tag item.
+ *
+ * Adds a comma after the tag when `$isNotLast` is true,
+ * otherwise uses a final dot for the last tag.
+ */
 const Tag = styled.li`
   width: max-content;
   font-weight: 400;
@@ -83,7 +105,7 @@ const Tag = styled.li`
   }
 
   ${(props) =>
-    props.$index &&
+    props.$isNotLast &&
     css`
       &::after {
         content: ",";
@@ -95,6 +117,9 @@ const Tag = styled.li`
   }
 `;
 
+/**
+ * Thin horizontal separator line between subtitle and tags.
+ */
 const Line = styled.span`
   position: relative;
   width: 100%;
@@ -112,18 +137,43 @@ const Line = styled.span`
   }
 `;
 
+/**
+ * PostTemplateHeader
+ *
+ * Renders the header section for a post, including:
+ *  - title
+ *  - subtitle
+ *  - divider line
+ *  - list of tags
+ *
+ * @param {Object} props
+ * @param {Object} props.data
+ * @param {string} [props.data.title]    - Main title of the post.
+ * @param {string} [props.data.subtitle] - Subtitle / short description.
+ * @param {Array}  [props.data.tags]     - List of tag strings.
+ *
+ * @returns {JSX.Element | null}
+ */
 const PostTemplateHeader = ({ data }) => {
+  if (!data) return null;
+
+  const { title = "", subtitle = "", tags = [] } = data;
+
   return (
     <Container>
-      <Title>{data.title}</Title>
-      <SubTitle>{data.subtitle}</SubTitle>
+      <Title>{title}</Title>
+      <SubTitle>{subtitle}</SubTitle>
       <Line />
       <Tags>
-        {data.tags.map((tag, index) => (
-          <Tag key={tag + index} $index={index < data.tags.length - 1}>
-            {tag.toLowerCase()}
-          </Tag>
-        ))}
+        {tags.map((tag, index) => {
+          const isNotLast = index < tags.length - 1;
+
+          return (
+            <Tag key={`${tag}-${index}`} $isNotLast={isNotLast}>
+              {String(tag).toLowerCase()}
+            </Tag>
+          );
+        })}
       </Tags>
     </Container>
   );

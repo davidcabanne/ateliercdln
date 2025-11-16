@@ -8,6 +8,13 @@ import useElementOnScreen from "@/hooks/useElementOnScreen";
 import Placeholder from "./Placeholder";
 import Skeleton from "./Skeleton";
 
+/**
+ * Animated container for a single post preview.
+ *
+ * - Uses `Link` as wrapper so the entire block is clickable => Project post
+ * - Starts invisible (opacity + downward translation)
+ * - Activated when visible via IntersectionObserver
+ */
 const Container = styled(Link)`
   position: relative;
   display: flex;
@@ -26,11 +33,37 @@ const Container = styled(Link)`
   }
 `;
 
+/**
+ * Post
+ *
+ * Renders a clickable preview for a post inside the homepage grid.
+ * Animates into view when scrolled into viewport.
+ *
+ * @param {Object} props
+ * @param {Object} props.post - Post data coming from Sanity.
+ * @param {string} props.post.id
+ * @param {Object} props.post.slug
+ * @param {string} props.post.slug.current - Slug for the post URL.
+ * @param {Array}  props.post.landingPageGallery - Images used for preview.
+ *
+ * @returns {JSX.Element}
+ */
 const Post = ({ post }) => {
   const { id, slug, landingPageGallery } = post;
 
-  const isPostValid = id && slug?.current && landingPageGallery.length > 0;
+  /**
+   * A post is considered valid if:
+   * - it has an ID
+   * - it has a slug
+   * - it has at least one image in the landing gallery
+   */
+  const isPostValid =
+    Boolean(id) && Boolean(slug?.current) && landingPageGallery.length > 0;
 
+  /**
+   * Intersection Observer hook: reveals component when in viewport.
+   * threshold: 0.15 → activates when ~15% of the component is visible.
+   */
   const [containerRef, isVisible] = useElementOnScreen({
     root: null,
     rootMargin: "0px",
@@ -39,13 +72,12 @@ const Post = ({ post }) => {
 
   return (
     <Container
-      href={isPostValid ? `/post/${encodeURIComponent(slug.current)}` : ""}
       ref={containerRef}
-      key={id}
       className={isVisible ? "active" : ""}
+      href={isPostValid ? `/post/${encodeURIComponent(slug.current)}` : ""}
     >
       {isPostValid ? (
-        <Placeholder mainImage={landingPageGallery?.[0] || null} />
+        <Placeholder mainImage={landingPageGallery[0]} />
       ) : (
         <Skeleton>Empty</Skeleton>
       )}

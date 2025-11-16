@@ -4,6 +4,12 @@ import * as _var from "../../../styles/variables";
 
 import Post from "@/components/pages/Home/Post";
 
+/**
+ * Outer container for the `Home` posts list.
+ *
+ * - Handles horizontal padding across breakpoints
+ * - Keeps the grid aligned with the rest of the layout
+ */
 const Container = styled.div`
   position: relative;
   width: 100%;
@@ -22,6 +28,12 @@ const Container = styled.div`
   }
 `;
 
+/**
+ * Grid that holds all individual Post cards.
+ *
+ * - Single column on all breakpoints for now
+ * - Vertical gap scales down on smaller screens
+ */
 const Grid = styled.section`
   position: relative;
   width: 100%;
@@ -42,7 +54,22 @@ const Grid = styled.section`
   }
 `;
 
+/**
+ * Posts
+ *
+ * Renders a list/grid of Post components.
+ *
+ * @param {Object} props
+ * @param {Array}  [props.posts] - Array of post objects, each passed down to <Post />.
+ *
+ * Each post is expected to have a unique `id` used as React key.
+ *
+ * @returns {JSX.Element | null}
+ */
+
 const Posts = ({ posts }) => {
+  if (!posts.length) return null;
+
   return (
     <Container>
       <Grid>
