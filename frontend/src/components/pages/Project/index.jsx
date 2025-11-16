@@ -2,11 +2,18 @@ import styled, { css } from "styled-components";
 import Image from "next/image";
 import * as _var from "../../../styles/variables";
 
+import useElementOnScreen from "@/hooks/useElementOnScreen";
+
 import Header from "./ProjectHeader";
 
+/* ──────────────────────────────────────────────────────────────── */
+/*  Shared Horizontal Padding                                       */
+/* ──────────────────────────────────────────────────────────────── */
+
 /**
- * Shared horizontal padding used for rows/content to keep
- * everything aligned with the header on different breakpoints.
+ * Shared horizontal padding used across rows and text blocks.
+ * Ensures consistent alignment with the header and overall grid,
+ * adapting responsively to each breakpoint.
  */
 const PADDING = css`
   padding: 0 120px;
@@ -24,10 +31,14 @@ const PADDING = css`
   }
 `;
 
-/* ───────────────────────── Layout containers ───────────────────────── */
+/* ──────────────────────────────────────────────────────────────── */
+/*  Page-Level Containers                                           */
+/* ──────────────────────────────────────────────────────────────── */
 
-// Outer container for a single project post page.
-// Handles top spacing relative to the header and global layout.
+/**
+ * Outer wrapper for the entire project page.
+ * Adds top margin depending on header size and viewport.
+ */
 const Container = styled.div`
   position: relative;
   width: 100%;
@@ -43,14 +54,13 @@ const Container = styled.div`
 `;
 
 /**
- * Vertical grid that holds:
- *  - main image
- *  - description
- *  - image row
- *  - additional images
+ * Vertical Grid layout stacking the different content sections:
+ * - Hero image
+ * - Description text
+ * - Image rows
+ * - Additional full-width or regular images
  *
- * Items are stacked vertically with a large gap that scales
- * down on smaller breakpoints.
+ * Uses large vertical spacing that decreases on smaller breakpoints.
  */
 const Grid = styled.div`
   position: relative;
@@ -74,8 +84,8 @@ const Grid = styled.div`
 `;
 
 /**
- * Row used for the 2-column image section.
- * On tablet and below, it collapses to a single column.
+ * A responsive grid row for two side-by-side images.
+ * Automatically collapses to a single-column stack on smaller screens.
  */
 const Row = styled.div`
   position: relative;
@@ -92,27 +102,57 @@ const Row = styled.div`
   }
 `;
 
-/* ───────────────────────── Image wrappers ───────────────────────── */
+/* ──────────────────────────────────────────────────────────────── */
+/*  Image Placeholders (motion + aspect-ratio wrappers)             */
+/* ──────────────────────────────────────────────────────────────── */
+
+const fadeIn = css`
+  opacity: 0;
+  transform: translateY(16px);
+  transition: 500ms ${_var.cubicBezier};
+  transition-property: opacity, transform;
+
+  &.active {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+`;
+
+/**
+ * Base wrapper for all image placeholders.
+ *
+ * Shared:
+ *  - positioning
+ *  - overflow handling
+ *  - custom cursor behavior
+ *  - fade-in animation on scroll
+ */
+const PlaceholderBase = styled.div`
+  position: relative;
+  overflow: hidden;
+  cursor: none;
+  ${fadeIn}
+
+  @media ${_var.device.tablet_max} {
+    cursor: pointer !important;
+  }
+`;
 
 /**
  * Wrapper for "regular" horizontal images.
  * Uses a fixed aspect ratio (21:10) and a reduced inner width
  * to align with the page padding.
  */
-const PlaceholderRegular = styled.div`
-  position: relative;
+const PlaceholderRegular = styled(PlaceholderBase)`
   width: calc(100% - (120px * 2));
   justify-self: center;
-  overflow: hidden;
   aspect-ratio: 21 / 10;
-  cursor: none;
 
   @media ${_var.device.laptop_max} {
     width: calc(100% - (${_var.spaceL} * 2));
   }
 
   @media ${_var.device.tablet_max} {
-    cursor: pointer !important;
     width: calc(100% - (${_var.spaceM} * 2));
   }
 
@@ -125,35 +165,25 @@ const PlaceholderRegular = styled.div`
  * Wrapper for square images (1:1 aspect ratio),
  * typically used in the 2-column row.
  */
-const PlaceholderHalf = styled.div`
-  position: relative;
-  overflow: hidden;
+const PlaceholderHalf = styled(PlaceholderBase)`
   aspect-ratio: 1 / 1;
-  cursor: none;
-
-  @media ${_var.device.tablet_max} {
-    cursor: pointer !important;
-  }
 `;
 
 /**
  * Wrapper for full-width horizontal images
  * that span the available container width.
  */
-const PlaceholderFull = styled.div`
-  position: relative;
-  overflow: hidden;
+const PlaceholderFull = styled(PlaceholderBase)`
   aspect-ratio: 21 / 10;
-  cursor: none;
-
-  @media ${_var.device.tablet_max} {
-    cursor: pointer !important;
-  }
 `;
 
+/* ──────────────────────────────────────────────────────────────── */
+/*  Images                                                          */
+/* ──────────────────────────────────────────────────────────────── */
+
 /**
- * Base Next.js Image used inside all placeholders.
- * Positioned absolutely to fill the wrapper and cover it.
+ * Shared Next.js Image component used inside each Placeholder wrapper.
+ * Uses absolute positioning to fill its parent entirely.
  */
 const StyledImage = styled(Image)`
   position: absolute;
@@ -166,9 +196,8 @@ const StyledImage = styled(Image)`
 `;
 
 /**
- * Long-form text description of the project.
- * Uses responsive font sizing and horizontal padding
- * aligned with the main layout.
+ * Styled paragraph for the long project description.
+ * Uses responsive font sizes and layout-aligned horizontal padding.
  */
 const Description = styled.p`
   font-weight: 400;
@@ -193,18 +222,19 @@ const Description = styled.p`
   }
 `;
 
-/* ───────────────────────── Image helper component ───────────────────────── */
+/* ──────────────────────────────────────────────────────────────── */
+/*  PostImage helper                                                */
+/* ──────────────────────────────────────────────────────────────── */
 
 /**
- * Renders a single image from the gallery inside a given wrapper component,
- * with support for Sanity's low-quality image placeholder (LQIP).
+ * Renders one image from the gallery inside the given placeholder wrapper.
+ * Includes:
+ *   - LQIP blur loading (from Sanity metadata)
+ *   - IntersectionObserver fade-in animation
  *
- * @param {Object}   props
- * @param {Array}    props.gallery - Array of image objects coming from Sanity.
- * @param {number}   props.index   - Index of the image to render from the gallery.
- * @param {React.FC} props.Wrapper - Styled wrapper component controlling layout/aspect.
- *
- * If the image at the requested index does not exist, nothing is rendered.
+ * @param {Object} props.gallery - Sanity gallery array
+ * @param {number} props.index   - Index of the desired image
+ * @param {React.FC} props.Wrapper - Styled wrapper component
  */
 const PostImage = ({ gallery, index, Wrapper }) => {
   const image = gallery?.[index];
@@ -212,8 +242,18 @@ const PostImage = ({ gallery, index, Wrapper }) => {
 
   const blurDataURL = image?.metadata?.lqip;
 
+  /**
+   * Intersection Observer hook: reveals component when in viewport.
+   * threshold: 0.15 → activates when ~15% of the component is visible.
+   */
+  const [containerRef, isVisible] = useElementOnScreen({
+    root: null,
+    rootMargin: "0px",
+    threshold: 0.15,
+  });
+
   return (
-    <Wrapper>
+    <Wrapper ref={containerRef} className={isVisible ? "active" : ""}>
       <StyledImage
         src={image.url}
         alt={image.alt || ""}
