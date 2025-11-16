@@ -2,6 +2,8 @@ import Link from "next/link";
 import styled from "styled-components";
 import * as _var from "../../styles/variables";
 
+import useCursorHoverHandlers from "@/hooks/useCursorHoverHandlers";
+
 import Logo from "../Logo";
 
 const userSelectStyles = `
@@ -21,6 +23,14 @@ const Container = styled.footer`
   color: white;
   background: black;
   z-index: 60;
+
+  & a {
+    cursor: none;
+
+    @media ${_var.device.tablet_max} {
+      cursor: pointer;
+    }
+  }
 
   @media ${_var.device.laptop_max} {
     padding: ${_var.spaceL} ${_var.spaceL};
@@ -213,26 +223,29 @@ const CallToAction = styled.a`
 `;
 
 const Footer = () => {
+  const cursorHandlers = useCursorHoverHandlers();
+
   return (
     <Container>
       <Wrapper>
         <TopSection>
           <LeftPanel>
-            <Link href="#top">
+            <Link href="#top" {...cursorHandlers}>
               <Logo fill="white" />
             </Link>
             <p>
               Le design au service des porteurs de projets et des entrepreneurs
-              souhaitant développer des images de marque uniques et fortes pour
+              souhaitant développer des images de marque uniques et fortes pour
               que leurs idées novatrices et porteuses de sens soient adoptées
-              par le plus grand nombre.
+              par le plus grand nombre.
             </p>
             <CallToAction
               href="mailto: theo.chapdelaine@gmail.com"
               target="_blank"
               rel="noopener noreferrer"
+              {...cursorHandlers}
             >
-              Let's work
+              Let&apos;s work
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 19 19"
@@ -259,6 +272,7 @@ const Footer = () => {
                 href="https://fr.linkedin.com/in/tchapdelaine"
                 target="_blank"
                 rel="noopener noreferrer"
+                {...cursorHandlers}
               >
                 Linkedin
               </a>
@@ -266,6 +280,7 @@ const Footer = () => {
                 href="https://www.instagram.com/ateliercdln/"
                 target="_blank"
                 rel="noopener noreferrer"
+                {...cursorHandlers}
               >
                 Instagram
               </a>
@@ -278,7 +293,7 @@ const Footer = () => {
           </RightPanel>
         </TopSection>
         <BottomSection>
-          <p>Atelier CDLN 2024</p>
+          <p>Atelier CDLN 2025</p>
           <p>Tous droits réservés</p>
         </BottomSection>
       </Wrapper>

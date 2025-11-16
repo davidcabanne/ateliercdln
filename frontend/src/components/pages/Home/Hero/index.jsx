@@ -13,8 +13,12 @@ const Container = styled.section`
   display: flex;
   flex-direction: column;
   gap: clamp(8px, 5vw, 80px);
-  padding: 80px ${_var.spaceM};
+  padding: 148px 120px 120px 120px;
   overflow: hidden;
+
+  @media ${_var.device.laptop_max} {
+    padding: 64px ${_var.spaceL};
+  }
 
   @media ${_var.device.tablet_max} {
     padding: 64px ${_var.spaceM};

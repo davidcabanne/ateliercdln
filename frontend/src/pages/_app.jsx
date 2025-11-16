@@ -1,12 +1,33 @@
-import RootLayout from "./rootLayout/rootLayout";
+import { useContext, useEffect } from "react";
+import { useRouter } from "next/router";
+
+import RootLayout from "./RootLayout";
 
 import { createGlobalStyle } from "styled-components";
 import * as _var from "../styles/variables";
 
-import MouseContextProvider from "../context/mouseContext";
+import MouseContextProvider, { MouseContext } from "../context/mouseContext";
 
-import Cursor from "../components/Cursor/index";
+import Cursor from "@/components/Cursor";
 
+/* ──────────────────────────────────────────────────────────────── */
+/*  Global Styles                                                   */
+/* ──────────────────────────────────────────────────────────────── */
+
+/**
+ * GlobalStyle
+ *
+ * Global CSS reset and base typography/layout rules for the app.
+ *
+ * Includes:
+ *  - Box-sizing + margin/padding reset
+ *  - List style reset
+ *  - Smooth scrolling
+ *  - Font stack + body defaults
+ *  - iOS height fallbacks
+ *  - Global custom cursor behavior (hidden on desktop, native on touch)
+ *  - Reduced motion support
+ */
 const GlobalStyle = createGlobalStyle`
 *,
 *::before,
@@ -78,7 +99,6 @@ a:visited {
 h1 {
   font-size: 128px;
   font-weight: 400;
-  text-transform: uppercase;
 }
 
 h1, h2 {
@@ -113,11 +133,75 @@ p {
 }
 `;
 
+/* ──────────────────────────────────────────────────────────────── */
+/*  Cursor + Router Integration                                     */
+/* ──────────────────────────────────────────────────────────────── */
+
+/**
+ * CursorRouteSync
+ *
+ * Small helper component that syncs the custom cursor state
+ * with Next.js route changes.
+ *
+ * Responsibilities:
+ *  - Listens to router events:
+ *      • routeChangeStart
+ *      • routeChangeComplete
+ *      • routeChangeError
+ *  - Resets the cursor type to "" whenever a route change occurs
+ *    so the cursor doesn't get "stuck" in a hover state between pages.
+ *
+ * @returns {null}
+ */
+const CursorRouteSync = () => {
+  const router = useRouter();
+  const { cursorChangeHandler } = useContext(MouseContext);
+
+  useEffect(() => {
+    const resetCursor = () => cursorChangeHandler("");
+
+    router.events.on("routeChangeStart", resetCursor);
+    router.events.on("routeChangeComplete", resetCursor);
+    router.events.on("routeChangeError", resetCursor);
+
+    return () => {
+      router.events.off("routeChangeStart", resetCursor);
+      router.events.off("routeChangeComplete", resetCursor);
+      router.events.off("routeChangeError", resetCursor);
+    };
+  }, [router, cursorChangeHandler]);
+
+  return null;
+};
+
+/* ──────────────────────────────────────────────────────────────── */
+/*  Custom App Component (_app.js)                                  */
+/* ──────────────────────────────────────────────────────────────── */
+
+/**
+ * MyApp
+ *
+ * Custom Next.js App component.
+ *
+ * Wraps every page with:
+ *  - MouseContextProvider: global custom cursor state
+ *  - RootLayout: shared layout (header, main wrapper, etc.)
+ *  - Cursor: custom visual cursor that follows the mouse
+ *  - CursorRouteSync: ensures cursor resets on navigation
+ *  - GlobalStyle: global CSS reset + base styles
+ *
+ * @param {Object} props
+ * @param {React.ComponentType} props.Component - Active page component.
+ * @param {Object} props.pageProps - Props preloaded for the page.
+ *
+ * @returns {JSX.Element}
+ */
 function MyApp({ Component, pageProps }) {
   return (
     <MouseContextProvider>
       <RootLayout>
         <Cursor />
+        <CursorRouteSync />
         <GlobalStyle />
         <Component {...pageProps} />
       </RootLayout>

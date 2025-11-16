@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import styled, { keyframes } from "styled-components";
-import * as _var from "../styles/variables";
+import * as _var from "../../styles/variables";
 
 import { MouseContext } from "@/context/mouseContext";
 
@@ -10,11 +10,19 @@ const Container = styled.section`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding: 200px ${_var.spaceM};
+  padding: 120px 120px;
   overflow: hidden;
 
+  @media ${_var.device.laptop_max} {
+    padding: 120px ${_var.spaceL};
+  }
+
   @media ${_var.device.tablet_max} {
-    display: none;
+    padding: 80px ${_var.spaceM};
+  }
+
+  @media ${_var.device.mobileL_max} {
+    padding: 32px ${_var.spaceS};
   }
 `;
 
@@ -60,7 +68,7 @@ const Svg = styled.svg`
   max-width: 1450px;
 `;
 
-const Email = () => {
+const EmailDesktop = () => {
   const { cursorChangeHandler } = useContext(MouseContext);
 
   return (
@@ -165,4 +173,4 @@ const Email = () => {
   );
 };
 
-export default Email;
+export default EmailDesktop;
